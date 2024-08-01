@@ -15,10 +15,6 @@ import { IoRocketOutline } from "react-icons/io5";
 import Link from "next/link";
 import { MdShowChart } from "react-icons/md";
 
-const Example = () => {
-  return <FlyoutNav />;
-};
-
 const FlyoutNav = () => {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -29,9 +25,8 @@ const FlyoutNav = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full px-6 text-white 
-      transition-all duration-300 ease-out lg:px-12
-      ${scrolled ? "bg-slate-950 py-3" : "bg-neutral-950/0 py-6 shadow-none"}`}
+      className={` bg-slate-900 fixed top-0 z-50 w-full px-6 text-white 
+      transition-all duration-300 ease-out lg:px-12 py-3 `}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         <Logo />
@@ -378,7 +373,7 @@ const MobileMenu = () => {
   );
 };
 
-export default Example;
+export default FlyoutNav;
 
 const LINKS = [
   {
