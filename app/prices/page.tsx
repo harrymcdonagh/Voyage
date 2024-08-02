@@ -1,5 +1,5 @@
-import { Coin, Columns } from "./Columns";
-import { DataTable } from "./DataTable";
+import { Coin, Columns } from "./components/priceTable/Columns";
+import { DataTable } from "./components/priceTable/DataTable";
 
 async function getData(): Promise<Coin[]> {
   // Fetch data from your API here.
@@ -151,7 +151,7 @@ export default async function PricePage() {
   const data = await getData();
 
   return (
-    <div className="container mx-auto py-24">
+    <div className="container mx-auto">
       <h1 className="text-4xl font-bold text-center mb-5">Today's Prices</h1>
       <DataTable columns={Columns} data={data} />
     </div>
