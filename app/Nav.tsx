@@ -11,7 +11,7 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="#" className="flex items-center gap-2" prefetch={false}>
+        <Link href="/" className="flex items-center gap-2" prefetch={false}>
           <IoRocketOutline className="h-6 w-6" />
           <span className="text-lg font-semibold">Voyage</span>
         </Link>
@@ -55,7 +55,7 @@ export default function Nav() {
           </SheetTrigger>
           <SheetContent side="right" className="w-full max-w-xs">
             <div className="flex h-16 items-center justify-between px-4">
-              <Link href="#" className="flex items-center gap-2" prefetch={false}>
+              <Link href="/" className="flex items-center gap-2" prefetch={false}>
                 <IoRocketOutline className="h-6 w-6" />
                 <span className="text-lg font-semibold">Voyage</span>
               </Link>
