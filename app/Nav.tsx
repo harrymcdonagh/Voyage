@@ -41,7 +41,9 @@ export default function Nav() {
             Watchlist
           </Link>
           <div className="flex items-center gap-4">
-            <Button variant="outline">Sign In</Button>
+            <Link href="/api/auth/signin">
+              <Button variant="outline">Sign In</Button>
+            </Link>
             <Button>Register</Button>
             <ModeToggle />
           </div>
@@ -95,7 +97,9 @@ export default function Nav() {
                 Watchlist
               </Link>
               <div className="flex flex-col gap-2">
-                <Button variant="outline">Sign In</Button>
+                <Link href="/api/auth/signin">
+                  <Button variant="outline">Sign In</Button>
+                </Link>
                 <Button>Register</Button>
               </div>
             </nav>
