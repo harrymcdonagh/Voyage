@@ -13,29 +13,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
 model User {
-  userID       Int           @id @default(autoincrement())
-  email        String        @unique
-  firstname    String
-  lastname     String
-  username     String        @unique
-  password     String
-  transactions Transaction[] @relation("UserTransactionsUser")
-  watchlist    Watchlist[]   @relation("UserWatchlistUser")
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("users")
 }
 
-model Transaction {
-  transactionID Int      @id @default(autoincrement())
-  amount        Float
-  price         Float
-  date          DateTime
-  userID        Int
-  user          User     @relation(fields: [userID], references: [userID], name: "UserTransactionsUser")
-}
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
 
-model Watchlist {
-  watchlistID Int    @id @default(autoincrement())
-  coinID      String
-  userID      Int
-  user        User   @relation(fields: [userID], references: [userID], name: "UserWatchlistUser")
+  @@unique([identifier, token])
+  @@map("verificationtokens")
 }
