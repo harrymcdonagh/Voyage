@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
@@ -6,8 +8,11 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { IoRocketOutline } from "react-icons/io5";
 import { MdShowChart } from "react-icons/md";
 import { FiPieChart, FiStar } from "react-icons/fi";
+import { useSession } from "next-auth/react";
 
 export default function Nav() {
+  const { status, data: session } = useSession();
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
@@ -40,13 +45,19 @@ export default function Nav() {
             <FiStar className="h-5 w-5" />
             Watchlist
           </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/api/auth/signin">
-              <Button variant="outline">Sign In</Button>
-            </Link>
-            <Button>Register</Button>
-            <ModeToggle />
-          </div>
+          {status === "loading" && <div>Loading...</div>}
+          {status === "unauthenticated" && (
+            <div className="flex items-center gap-4">
+              <Link href="/api/auth/signin">
+                <Button variant="outline">Sign In</Button>
+              </Link>
+              <Button>Register</Button>
+              <ModeToggle />
+            </div>
+          )}
+          {status === "authenticated" && (
+            <div className="flex items-center">{session.user!.name}</div>
+          )}
         </nav>
         <Sheet>
           <SheetTrigger asChild>
