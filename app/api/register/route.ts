@@ -2,6 +2,7 @@ import  prisma  from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { stat } from "fs";
 
 const schema = z.object({
   email: z.string().email(),
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
     where: { email: body.email },
   });
 
-  if (user) return NextResponse.json({ error: "User already exists" }, { status: 400 });
+  if (user) return NextResponse.json({ message: "User already exists" }, { status: 400 });
 
   const hashedPassword = await bcrypt.hash(body.password, 10);
   const newUser = await prisma.user.create({
@@ -33,5 +34,10 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  return NextResponse.json({ name: newUser.name });
+  return NextResponse.json({ 
+    message: "User registered successfully",
+    name: newUser.name, 
+    email: newUser.email, 
+    status: 200
+  });
 }

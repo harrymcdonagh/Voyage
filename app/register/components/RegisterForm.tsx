@@ -8,14 +8,13 @@ import { IoRocketOutline } from "react-icons/io5";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import RegisterDialog from "./RegisterDialog";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email").min(1, "Email is required"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .min(1, "Password is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -24,19 +23,37 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
 
+  const [message, setMessage] = useState<string | null>(null);
+  const [status, setStatus] = useState<number | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    fetch("/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      setMessage(result.message);
+      setStatus(response.status);
+
+      setDialogOpen(true);
+    } catch (error) {
+      console.error("Registration error:", error);
+      setMessage("An unexpected error occurred. Please try again later.");
+      setStatus(500);
+      setDialogOpen(true);
+    }
   };
 
   return (
@@ -102,13 +119,22 @@ export default function RegisterForm() {
           <div>
             <Button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-primary py-2 px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              disabled={isSubmitting}
+              className={`flex w-full justify-center rounded-md bg-primary py-2 px-4 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Sign up
+              {isSubmitting ? "Registering..." : "Register"}{" "}
             </Button>
           </div>
         </form>
       </div>
+      <RegisterDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        status={status}
+        message={message}
+      />
     </div>
   );
 }
