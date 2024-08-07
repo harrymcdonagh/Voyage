@@ -78,7 +78,7 @@ export default function Nav() {
                     className="rounded-full hover:opacity-80 cursor-pointer"
                   />
                   <AvatarFallback className="rounded-full bg-primary flex items-center justify-center">
-                    {session.user!.name![0]}
+                    T
                   </AvatarFallback>
                   <span className="sr-only">Toggle user menu</span>
                 </Avatar>
@@ -144,7 +144,7 @@ export default function Nav() {
                       className="rounded-full hover:opacity-80 cursor-pointer"
                     />
                     <AvatarFallback className="rounded-full bg-primary flex items-center justify-center">
-                      {session.user!.name![0]}
+                      T
                     </AvatarFallback>
                   </Avatar>
                   Profile
