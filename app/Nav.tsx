@@ -64,8 +64,9 @@ export default function Nav() {
               <Link href="/api/auth/signin">
                 <Button variant="outline">Sign In</Button>
               </Link>
-              <Button>Register</Button>
-              <ModeToggle />
+              <Link href="/register">
+                <Button>Register</Button>
+              </Link>
             </div>
           )}
           {status === "authenticated" && (
@@ -77,9 +78,6 @@ export default function Nav() {
                     alt="@shadcn"
                     className="rounded-full hover:opacity-80 cursor-pointer"
                   />
-                  <AvatarFallback className="rounded-full bg-primary flex items-center justify-center">
-                    T
-                  </AvatarFallback>
                   <span className="sr-only">Toggle user menu</span>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -97,6 +95,7 @@ export default function Nav() {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
+          <ModeToggle />
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -127,14 +126,14 @@ export default function Nav() {
                   <Link href="/api/auth/signin" className="flex flex-col mb-2">
                     <Button variant="outline">Sign In</Button>
                   </Link>
-                  <Link href="/api/auth/signin" className="flex flex-col">
+                  <Link href="/register" className="flex flex-col">
                     <Button>Register</Button>
                   </Link>
                 </div>
               )}
               {status === "authenticated" && (
                 <Link
-                  href="/account"
+                  href="/"
                   className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
                 >
                   <Avatar className="h-7 w-7">
@@ -143,9 +142,6 @@ export default function Nav() {
                       alt="@shadcn"
                       className="rounded-full hover:opacity-80 cursor-pointer"
                     />
-                    <AvatarFallback className="rounded-full bg-primary flex items-center justify-center">
-                      T
-                    </AvatarFallback>
                   </Avatar>
                   Profile
                 </Link>
