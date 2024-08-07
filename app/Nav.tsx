@@ -71,7 +71,7 @@ export default function Nav() {
           {status === "authenticated" && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar className="h-10 w-10">
+                <Avatar className="h-7 w-7">
                   <AvatarImage
                     src={`${session.user!.image}`}
                     alt="@shadcn"
