@@ -62,13 +62,14 @@ model VerificationToken {
 }
 
 model Transaction {
-  userId          String
-  id              String   @id @default(cuid())
-  coinName        String
-  coinAmount      Float
-  coinPrice       Float
-  coinSymbol      String
-  transactionDate DateTime
+  userId           String
+  id               String   @id @default(cuid())
+  coinName         String
+  coinAmount       Float
+  coinPrice        Float
+  coinSymbol       String
+  transactionValue Float    @default(dbgenerated("(coinAmount * coinPrice)"))
+  transactionDate  DateTime
 
   User User @relation(fields: [userId], references: [id])
 
