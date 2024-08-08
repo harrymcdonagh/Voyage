@@ -64,7 +64,7 @@ export default function Nav() {
               <Link href="/api/auth/signin">
                 <Button variant="outline">Sign In</Button>
               </Link>
-              <Link href="/register">
+              <Link href="/auth/register">
                 <Button>Register</Button>
               </Link>
             </div>
@@ -126,7 +126,7 @@ export default function Nav() {
                   <Link href="/api/auth/signin" className="flex flex-col mb-2">
                     <Button variant="outline">Sign In</Button>
                   </Link>
-                  <Link href="/register" className="flex flex-col">
+                  <Link href="/auth/register" className="flex flex-col">
                     <Button>Register</Button>
                   </Link>
                 </div>
