@@ -40,7 +40,7 @@ export default function Nav() {
           {status === "authenticated" && (
             <>
               <Link
-                href="/portfolio"
+                href={`/portfolio/${session.user.id}`}
                 className="flex items-center gap-2 transition-colors hover:text-primary hover:underline hover:underline-offset-4"
                 prefetch={false}
               >
@@ -48,7 +48,7 @@ export default function Nav() {
                 Portfolio
               </Link>
               <Link
-                href="/watchlist"
+                href={`/watchlist/${session.user.id}`}
                 className="flex items-center gap-2 transition-colors hover:text-primary hover:underline hover:underline-offset-4"
                 prefetch={false}
               >
@@ -157,7 +157,7 @@ export default function Nav() {
               {status === "authenticated" && (
                 <>
                   <Link
-                    href="/portfolio"
+                    href={`/portfolio/${session.user.id}`}
                     className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
                     prefetch={false}
                   >
@@ -165,7 +165,7 @@ export default function Nav() {
                     Portfolio
                   </Link>
                   <Link
-                    href="/watchlist"
+                    href={`/watchlist/${session.user.id}`}
                     className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
                     prefetch={false}
                   >
