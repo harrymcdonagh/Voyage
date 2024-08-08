@@ -27,7 +27,7 @@ export default function RegistrationDialog({ open, onClose, status, message }: P
             </div>
             <DialogFooter>
               <div>
-                <Link href="api/auth/signin">
+                <Link href="/api/auth/signin">
                   <Button type="button">Sign in!</Button>
                 </Link>
               </div>
