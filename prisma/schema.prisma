@@ -46,8 +46,8 @@ model User {
   image          String?       @default("https://gravatar.com/avatar/?d=identicon")
   accounts       Account[]
   sessions       Session[]
-  transactions   Transaction[] @relation("UserTransactions")
-  watchlist      Watchlist[]   @relation("UserWatchlist")
+  transactions   Transaction[]
+  watchlist      Watchlist[]
 
   @@map("users")
 }
@@ -62,26 +62,25 @@ model VerificationToken {
 }
 
 model Transaction {
-  id          String   @id @default(cuid())
-  userId      String   @map("user_id")
-  coinName    String   @map("coin_name")
-  price       Decimal  @map("price")
-  purchasedAt DateTime @map("purchased_at")
+  userId          String
+  id              String   @id @default(cuid())
+  coinName        String
+  coinAmount      Float
+  coinPrice       Float
+  coinSymbol      String
+  transactionDate DateTime
 
-  user User @relation("UserTransactions", fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id])
 
-  @@index([userId], map: "user_id_index")
   @@map("transactions")
 }
 
 model Watchlist {
-  id       String @id @default(cuid())
-  userId   String @map("user_id")
-  coinName String @map("coin_name")
+  userId     String
+  id         String @id @default(cuid())
+  coinSymbol String
 
-  user User @relation("UserWatchlist", fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id])
 
-  @@unique([userId, coinName])
-  @@index([userId], map: "user_id_index")
-  @@map("watchlist")
+  @@map("watchlists")
 }
