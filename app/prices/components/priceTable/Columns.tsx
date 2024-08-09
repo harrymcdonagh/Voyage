@@ -20,10 +20,7 @@ export const Columns: ColumnDef<Coin>[] = [
     accessorKey: "rank",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
-        >
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
           Rank <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -48,10 +45,7 @@ export const Columns: ColumnDef<Coin>[] = [
     accessorKey: "pchange",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
-        >
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
           24h% <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

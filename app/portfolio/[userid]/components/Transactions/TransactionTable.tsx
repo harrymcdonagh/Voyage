@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -26,12 +25,15 @@ import { FiChevronRight } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface PriceTableProps<TData, TValue> {
+interface TransactionTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TData, TValue>) {
+export function TransactionTable<TData, TValue>({
+  columns,
+  data,
+}: TransactionTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});

@@ -1,5 +1,5 @@
 import { Coin, Columns } from "./components/priceTable/Columns";
-import { DataTable } from "./components/priceTable/DataTable";
+import { PriceTable } from "./components/priceTable/PriceTable";
 
 async function getData(): Promise<Coin[]> {
   // Fetch data from your API here.
@@ -147,13 +147,13 @@ async function getData(): Promise<Coin[]> {
   ];
 }
 
-export default async function PricePage() {
+export default async function Prices() {
   const data = await getData();
 
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl font-bold text-center mb-5">Today's Prices</h1>
-      <DataTable columns={Columns} data={data} />
+      <PriceTable columns={Columns} data={data} />
     </div>
   );
 }
