@@ -24,15 +24,18 @@ import {
 import { FiChevronRight } from "react-icons/fi";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
+import AddButton from "./AddButton";
 
 interface TransactionTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  userId: string | undefined;
 }
 
 export function TransactionTable<TData, TValue>({
   columns,
   data,
+  userId,
 }: TransactionTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -57,13 +60,14 @@ export function TransactionTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-2">
+      <div className="flex items-center py-4">
         <Input
           placeholder="Search by name"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
+        <AddButton userId={userId} />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -105,10 +109,6 @@ export function TransactionTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <div className="flex items-centertext-sm justify-center text-muted-foreground mt-2">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} coins watchlisted.
-        </div>
         <div className="flex items-center justify-center space-x-2 py-4">
           <Button
             variant="outline"

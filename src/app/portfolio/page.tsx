@@ -1,19 +1,17 @@
-import { Columns, Transaction } from "./components/Transactions/Columns";
+import { Columns } from "./components/Transactions/Columns";
+import { Transaction } from "./components/Transactions/TransactionSchema";
 import { TransactionTable } from "./components/Transactions/TransactionTable";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import getSession from "@/src/lib/getSession";
-import axios from "axios";
+import axiosInstance from "@/src/lib/axios";
 
 export const metadata: Metadata = {
   title: "Portfolio",
 };
 
 async function getTransactions(userId: string | undefined): Promise<Transaction[]> {
-  const endpoint = `${process.env.DEV_URL}/api/user/${userId}/transactions`;
-  console.log("Fetching transactions from:", endpoint);
-  const response = await axios.get(endpoint);
-  console.log("Fetched transactions:", response.data);
+  const response = await axiosInstance.get(`/api/user/${userId}/transactions`);
   return response.data;
 }
 
@@ -30,7 +28,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto">
-      <TransactionTable columns={Columns} data={data} />
+      <TransactionTable userId={userId} columns={Columns} data={data} />
     </div>
   );
 }

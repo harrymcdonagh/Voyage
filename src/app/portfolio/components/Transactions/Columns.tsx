@@ -3,21 +3,8 @@
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { z } from "zod";
-
-export const TransactionSchema = z.object({
-  userId: z.string(),
-  id: z.string(),
-  name: z.string(),
-  amount: z.number(),
-  price: z.number(),
-  symbol: z.string(),
-  value: z.number(),
-  date: z.string(),
-  type: z.enum(["BUY", "SELL"]),
-});
-
-export type Transaction = z.infer<typeof TransactionSchema>;
+import RemoveButton from "./RemoveButton";
+import { Transaction } from "./TransactionSchema";
 
 export const Columns: ColumnDef<Transaction>[] = [
   {
@@ -77,8 +64,13 @@ export const Columns: ColumnDef<Transaction>[] = [
     header: "Type",
   },
   {
-    accessorKey: "edit",
+    accessorKey: "edit-delete",
     header: "",
-    cell: ({ row }) => <Button variant="outline">Edit</Button>,
+    cell: ({ row }) => (
+      <div className="flex gap-2">
+        <Button variant="outline">Edit</Button>
+        <RemoveButton userId={row.original.userId} id={row.original.id} />
+      </div>
+    ),
   },
 ];

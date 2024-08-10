@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { auth, signIn, signOut } from "../auth";
+import { signIn, signOut } from "../auth";
 import { Lock } from "lucide-react";
 import getSession from "@/src/lib/getSession";
 
