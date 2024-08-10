@@ -8,35 +8,36 @@ import { z } from "zod";
 export const TransactionSchema = z.object({
   userId: z.string(),
   id: z.string(),
-  coinAmount: z.number(),
-  coinName: z.string(),
-  coinSymbol: z.string(),
-  coinPrice: z.number(),
-  transactionValue: z.number(),
-  transactionDate: z.string(),
+  name: z.string(),
+  amount: z.number(),
+  price: z.number(),
+  symbol: z.string(),
+  value: z.number(),
+  date: z.string(),
+  type: z.enum(["BUY", "SELL"]),
 });
 
 export type Transaction = z.infer<typeof TransactionSchema>;
 
 export const Columns: ColumnDef<Transaction>[] = [
   {
-    accessorKey: "coinName",
+    accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
       return (
         <span>
-          {row.original.coinName} ({row.original.coinSymbol})
+          {row.original.name} ({row.original.symbol})
         </span>
       );
     },
   },
   {
-    accessorKey: "coinAmount",
+    accessorKey: "amount",
     header: "Amount",
     cell: ({ row }) => {
       return (
         <span>
-          {row.original.coinAmount} {row.original.coinSymbol}
+          {row.original.amount} {row.original.symbol}
         </span>
       );
     },
@@ -45,11 +46,11 @@ export const Columns: ColumnDef<Transaction>[] = [
     accessorKey: "price",
     header: "Price ($)",
     cell: ({ row }) => {
-      return <span>${row.original.coinPrice}</span>;
+      return <span>${row.original.price}</span>;
     },
   },
   {
-    accessorKey: "transactionValue",
+    accessorKey: "value",
     header: ({ column }) => {
       return (
         <div>
@@ -64,8 +65,16 @@ export const Columns: ColumnDef<Transaction>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span>${row.original.transactionValue}</span>;
+      return <span>${row.original.value}</span>;
     },
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    accessorKey: "type",
+    header: "Type",
   },
   {
     accessorKey: "edit",
