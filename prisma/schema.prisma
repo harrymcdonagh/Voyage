@@ -9,6 +9,11 @@ generator client {
   previewFeatures = ["driverAdapters"]
 }
 
+enum TransactionType {
+  BUY
+  SELL
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -16,11 +21,14 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          String?
   accounts      Account[]
   sessions      Session[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+  watchlists   Watchlist[]
 
   @@map("users")
 }
@@ -70,4 +78,30 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Transaction {
+  userId String
+  id     String          @id @default(cuid())
+  name   String
+  amount Float
+  price  Float
+  symbol String
+  value  Float
+  date   DateTime
+  type   TransactionType
+
+  User User @relation(fields: [userId], references: [id])
+
+  @@map("transactions")
+}
+
+model Watchlist {
+  userId     String
+  id         String @id @default(cuid())
+  coinSymbol String
+
+  User User @relation(fields: [userId], references: [id])
+
+  @@map("watchlists")
 }

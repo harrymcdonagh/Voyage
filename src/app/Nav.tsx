@@ -5,7 +5,7 @@ import { JSX, SVGProps } from "react";
 import { ModeToggle } from "@/src/components/ModeToggle";
 import { IoRocketOutline } from "react-icons/io5";
 import { MdShowChart } from "react-icons/md";
-import { FiPieChart, FiStar } from "react-icons/fi";
+import { FiPieChart, FiStar, FiSettings } from "react-icons/fi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,9 +15,11 @@ import {
 } from "../components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { auth, signIn, signOut } from "../auth";
+import { Lock } from "lucide-react";
+import getSession from "@/src/lib/getSession";
 
 export default async function Nav() {
-  const session = await auth();
+  const session = await getSession();
   const user = session?.user;
 
   return (
@@ -81,8 +83,16 @@ export default async function Nav() {
                   <Link href="/">My Account</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/">Settings</Link>
+                  <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
+                {user.role === "admin" && (
+                  <DropdownMenuItem>
+                    <Link href="/admin" className="flex">
+                      <Lock className="mr-2 h-4 w-4" />
+                      Admin
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <Link href="/api/auth/signout">Logout</Link>
@@ -123,19 +133,22 @@ export default async function Nav() {
                 </div>
               )}
               {user && (
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
-                >
-                  <Avatar className="h-7 w-7">
-                    <AvatarImage
-                      src={`${user.image}`}
-                      alt="@shadcn"
-                      className="rounded-full hover:opacity-80 cursor-pointer"
-                    />
-                  </Avatar>
-                  Profile
-                </Link>
+                <div className="flex justify-between">
+                  <Link
+                    href="/"
+                    className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
+                  >
+                    <Avatar className="h-7 w-7">
+                      <AvatarImage
+                        src={`${user.image}`}
+                        alt="@shadcn"
+                        className="rounded-full hover:opacity-80 cursor-pointer"
+                      />
+                    </Avatar>
+                    Profile
+                  </Link>
+                  <div className="flex flex-col gap-2">{SignOutButton()}</div>
+                </div>
               )}
               <Link
                 href="/prices"
@@ -163,8 +176,21 @@ export default async function Nav() {
                     <FiStar className="h-7 w-7" />
                     Watchlist
                   </Link>
-                  <Link href="/api/auth/signout" className="flex flex-col gap-2">
-                    <Button>Logout</Button>
+                  {user.role === "admin" && (
+                    <Link
+                      href="/settings"
+                      className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
+                    >
+                      <Lock className="h-7 w-7" />
+                      Admin
+                    </Link>
+                  )}
+                  <Link
+                    href="/settings"
+                    className="flex items-center gap-2 text-md font-medium transition-colors hover:text-primary"
+                  >
+                    <FiSettings className="h-7 w-7" />
+                    Settings
                   </Link>
                 </>
               )}
@@ -238,7 +264,7 @@ function SignOutButton() {
         await signOut();
       }}
     >
-      <Button type="submit"></Button>
+      <Button type="submit">Logout</Button>
     </form>
   );
 }
