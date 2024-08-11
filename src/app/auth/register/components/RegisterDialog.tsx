@@ -1,7 +1,7 @@
-import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/src/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog";
 import { CircleCheckIcon } from "lucide-react";
-import { Button } from "@/src/components/ui/button";
-import { VisuallyHidden } from "@/src/components/ui/visually-hidden";
+import { Button } from "@/components/ui/button";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import Link from "next/link";
 
 type Props = {

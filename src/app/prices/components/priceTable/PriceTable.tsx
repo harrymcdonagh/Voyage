@@ -20,11 +20,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "@/components/ui/table";
 
 import { FiChevronRight } from "react-icons/fi";
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 interface PriceTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

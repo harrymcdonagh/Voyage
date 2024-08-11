@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Button } from "@/src/components/ui/button";
-import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/src/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { JSX, SVGProps } from "react";
-import { ModeToggle } from "@/src/components/ModeToggle";
+import { ModeToggle } from "@/components/ModeToggle";
 import { IoRocketOutline } from "react-icons/io5";
 import { MdShowChart } from "react-icons/md";
 import { FiPieChart, FiStar, FiSettings } from "react-icons/fi";
@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { signIn, signOut } from "../auth";
 import { Lock } from "lucide-react";

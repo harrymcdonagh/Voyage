@@ -25,8 +25,8 @@ export async function POST(request: NextRequest, { params }: { params: { userid:
       data: {
         userId: userid,
         name: body.name,
-        amount: body.amount,
-        price: body.price,
+        amount: parseFloat(body.amount),
+        price: parseFloat(body.price),
         symbol: body.symbol,
         value: body.amount * body.price,
         date: new Date(body.date),

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Label } from "@/src/components/ui/label";
-import { Input } from "@/src/components/ui/input";
-import { Button } from "@/src/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { IoRocketOutline } from "react-icons/io5";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
