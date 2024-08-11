@@ -22,10 +22,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { FiChevronRight } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 
 interface PriceTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -55,10 +53,10 @@ export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TDa
   });
 
   return (
-    <div>
+    <div className="mx-56">
       <div className="flex items-center py-2">
         <Input
-          placeholder="Search by name"
+          placeholder="Search by coin name"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
@@ -71,7 +69,7 @@ export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TDa
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead className="text-center" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -84,12 +82,13 @@ export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TDa
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow
+                  className="text-center"
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {cell.column.columnDef.header === "Info" && (
-                        <FiChevronRight className="text-2xl text-white cursor-pointer" />
-                      )}
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { CiStar } from "react-icons/ci";
+import Link from "next/link";
+import { SlEye } from "react-icons/sl";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Coin = {
   rank: number;
   name: string;
@@ -63,15 +63,20 @@ export const Columns: ColumnDef<Coin>[] = [
     accessorKey: "watchlist",
     header: "Watchlist",
     cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
+      <div className="flex justify-center">
+        <CiStar className="h-5 w-5" />
+      </div>
     ),
   },
   {
     accessorKey: "info",
     header: "Info",
+    cell: ({ row }) => {
+      return (
+        <Link className="flex justify-center" href={`/prices/${row.original.symbol}`}>
+          <SlEye className="h-5 w-5" />
+        </Link>
+      );
+    },
   },
 ];

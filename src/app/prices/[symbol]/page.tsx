@@ -5,7 +5,7 @@ interface Props {
 }
 
 const page = ({ params: { symbol } }: Props) => {
-  return <div>{symbol}</div>;
+  return <div>Info for {symbol}</div>;
 };
 
 export default page;
