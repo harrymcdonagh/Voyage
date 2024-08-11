@@ -28,6 +28,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto">
+      <h1 className="text-4xl font-bold text-center mb-5">Transactions</h1>
       <TransactionTable userId={userId} columns={Columns} data={data} />
     </div>
   );
