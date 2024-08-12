@@ -59,7 +59,7 @@ export function TransactionTable<TData, TValue>({
   });
 
   return (
-    <div className="mx-40">
+    <div>
       <div className="flex items-center gap-3 py-4">
         <Input
           placeholder="Search by name"

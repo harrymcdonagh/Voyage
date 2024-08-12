@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import axiosInstance from "@/src/lib/axios";
+import localAxios from "@/src/lib/axios";
 
 interface AddButtonProps {
   userId: string | undefined;
@@ -18,7 +18,7 @@ const AddButton: React.FC<AddButtonProps> = ({ userId }) => {
 
   const handleAdd = async () => {
     try {
-      await axiosInstance.post(`/api/user/${userId}/transactions`, transactionData);
+      await localAxios.post(`/api/user/${userId}/transactions`, transactionData);
     } catch (error) {
       console.error("Failed to add transaction:", error);
     }

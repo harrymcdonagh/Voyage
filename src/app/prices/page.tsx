@@ -1,9 +1,14 @@
 import { Coin } from "@/src/types/CoinSchema";
 import { Columns } from "./components/priceTable/Columns";
 import { PriceTable } from "./components/priceTable/PriceTable";
+import { cmcAxios } from "@/src/lib/axios";
 
-async function getData(): Promise<Coin[]> {
-  // Fetch data from your API here.
+async function getPrices(): Promise<Coin[]> {
+  const response = await cmcAxios.get(`/v1/cryptocurrency/listings/latest`);
+  return response.data.data;
+}
+
+/* async function getData(): Promise<Coin[]> {
   return [
     {
       rank: 1,
@@ -146,11 +151,11 @@ async function getData(): Promise<Coin[]> {
       pchange: 3.0,
     },
   ];
-}
+} */
 
 export default async function Prices() {
-  const data = await getData();
-
+  const data = await getPrices();
+  console.log(data);
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl font-bold text-center mb-5">Today's Prices</h1>

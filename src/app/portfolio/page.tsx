@@ -4,14 +4,14 @@ import { TransactionTable } from "./components/Transactions/TransactionTable";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import getSession from "@/src/lib/getSession";
-import axiosInstance from "@/src/lib/axios";
+import { localAxios } from "@/src/lib/axios";
 
 export const metadata: Metadata = {
   title: "Portfolio",
 };
 
 async function getTransactions(userId: string | undefined): Promise<Transaction[]> {
-  const response = await axiosInstance.get(`/api/user/${userId}/transactions`);
+  const response = await localAxios.get(`/api/user/${userId}/transactions`);
   return response.data;
 }
 

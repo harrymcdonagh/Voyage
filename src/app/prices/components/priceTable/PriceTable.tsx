@@ -53,7 +53,7 @@ export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TDa
   });
 
   return (
-    <div className="mx-40">
+    <div>
       <div className="flex items-center py-2">
         <Input
           placeholder="Search by coin name"

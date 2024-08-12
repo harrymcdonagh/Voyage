@@ -10,7 +10,7 @@ import { Coin } from "@/src/types/CoinSchema";
 
 export const Columns: ColumnDef<Coin>[] = [
   {
-    accessorKey: "rank",
+    accessorKey: "cmc_rank",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
@@ -28,14 +28,14 @@ export const Columns: ColumnDef<Coin>[] = [
     header: "Symbol",
   },
   {
-    accessorKey: "price",
+    accessorKey: "quote.USD.price",
     header: "Price ($)",
     cell: ({ row }) => {
-      return <span>${row.original.price}</span>;
+      return <span>${row.original.quote.USD.price}</span>;
     },
   },
   {
-    accessorKey: "pchange",
+    accessorKey: "quote.USD.percent_change_24h",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
@@ -44,7 +44,7 @@ export const Columns: ColumnDef<Coin>[] = [
       );
     },
     cell: ({ row }) => {
-      const pchange = parseFloat(row.original.pchange.toString());
+      const pchange = parseFloat(row.original.quote.USD.percent_change_24h.toString());
       if (pchange < 0) {
         return <span className="text-red-600">{pchange}%</span>;
       } else {

@@ -1,4 +1,4 @@
-import axiosInstance from "@/src/lib/axios";
+import { localAxios } from "@/src/lib/axios";
 import getSession from "@/src/lib/getSession";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 async function getWatchlist(userId: string | undefined) {
-  const respone = await axiosInstance.get(`/api/user/${userId}/watchlist`);
+  const respone = await localAxios.get(`/api/user/${userId}/watchlist`);
   return respone.data;
 }
 
