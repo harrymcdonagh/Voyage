@@ -1,5 +1,5 @@
 import { Columns } from "./components/Transactions/Columns";
-import { Transaction } from "./components/Transactions/TransactionSchema";
+import { Transaction } from "../../types/TransactionSchema";
 import { TransactionTable } from "./components/Transactions/TransactionTable";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
@@ -15,7 +15,7 @@ async function getTransactions(userId: string | undefined): Promise<Transaction[
   return response.data;
 }
 
-export default async function Page() {
+export default async function PortfolioPage() {
   const session = await getSession();
   const user = session?.user;
 

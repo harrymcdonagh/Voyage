@@ -3,12 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { CiStar } from "react-icons/ci";
+import RemoveButton from "./RemoveButton";
+import { WatchlistCoin } from "@/src/types/WatchlistedCoinSchema";
 import Link from "next/link";
 import { SlEye } from "react-icons/sl";
-import { Coin } from "@/src/types/CoinSchema";
 
-export const Columns: ColumnDef<Coin>[] = [
+export const Columns: ColumnDef<WatchlistCoin>[] = [
   {
     accessorKey: "rank",
     header: ({ column }) => {
@@ -53,15 +53,6 @@ export const Columns: ColumnDef<Coin>[] = [
     },
   },
   {
-    accessorKey: "watchlist",
-    header: "Watchlist",
-    cell: ({ row }) => (
-      <div className="flex justify-center">
-        <CiStar className="h-5 w-5" />
-      </div>
-    ),
-  },
-  {
     accessorKey: "info",
     header: "Info",
     cell: ({ row }) => {
@@ -70,6 +61,13 @@ export const Columns: ColumnDef<Coin>[] = [
           <SlEye className="h-5 w-5" />
         </Link>
       );
+    },
+  },
+  {
+    accessorKey: "remove",
+    header: "Remove",
+    cell: ({ row }) => {
+      return <RemoveButton userId={row.original.userId} id={row.original.id} />;
     },
   },
 ];

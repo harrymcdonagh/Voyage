@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import RemoveButton from "./RemoveButton";
-import { Transaction } from "./TransactionSchema";
+import { Transaction } from "../../../../types/TransactionSchema";
 
 export const Columns: ColumnDef<Transaction>[] = [
   {
