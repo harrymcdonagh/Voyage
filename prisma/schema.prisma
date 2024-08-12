@@ -97,9 +97,9 @@ model Transaction {
 }
 
 model Watchlist {
-  userId     String
-  id         String @id @default(cuid())
-  coinSymbol String
+  userId String
+  id     String @id @default(cuid())
+  symbol String
 
   User User @relation(fields: [userId], references: [id])
 

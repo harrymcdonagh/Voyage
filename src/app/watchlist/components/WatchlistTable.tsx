@@ -28,13 +28,11 @@ import { Input } from "@/components/ui/input";
 interface WatchlistTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  userId: string | undefined;
 }
 
 export function WatchlistTable<TData, TValue>({
   columns,
   data,
-  userId,
 }: WatchlistTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -90,9 +88,6 @@ export function WatchlistTable<TData, TValue>({
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {cell.column.columnDef.header === "Info" && (
-                        <FiChevronRight className="text-2xl text-white cursor-pointer" />
-                      )}
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

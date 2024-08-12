@@ -28,7 +28,7 @@ export default async function WatchlistPage() {
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl font-bold text-center mb-5">Watchlist</h1>
-      <WatchlistTable userId={userId} columns={Columns} data={data} />
+      <WatchlistTable columns={Columns} data={data} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import { Coin, Columns } from "./components/priceTable/Columns";
+import { Coin } from "@/src/types/CoinSchema";
+import { Columns } from "./components/priceTable/Columns";
 import { PriceTable } from "./components/priceTable/PriceTable";
 
 async function getData(): Promise<Coin[]> {

@@ -34,7 +34,7 @@ export const Columns: ColumnDef<WatchlistCoin>[] = [
       return <span>${row.original.price}</span>;
     },
   },
-  {
+  /* {
     accessorKey: "pchange",
     header: ({ column }) => {
       return (
@@ -51,7 +51,7 @@ export const Columns: ColumnDef<WatchlistCoin>[] = [
         return <span className="text-green-600">{pchange}%</span>;
       }
     },
-  },
+  }, */
   {
     accessorKey: "info",
     header: "Info",

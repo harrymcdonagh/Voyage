@@ -21,7 +21,7 @@ export async function POST(request: NextRequest, { params }: { params: { userid:
     const newWatchlistedCoin = await prisma.watchlist.create({
       data: {
         userId: userid,
-        coinSymbol: body.coinSymbol,
+        symbol: body.symbol,
       }
     });
 
