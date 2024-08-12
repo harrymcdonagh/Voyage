@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { CiStar } from "react-icons/ci";
 import Link from "next/link";
 import { SlEye } from "react-icons/sl";
 import { Coin } from "@/src/types/CoinSchema";
+import WatchlistButton from "./WatchlistButton";
 
 export const Columns: ColumnDef<Coin>[] = [
   {
@@ -55,11 +55,7 @@ export const Columns: ColumnDef<Coin>[] = [
   {
     accessorKey: "watchlist",
     header: "Watchlist",
-    cell: ({ row }) => (
-      <div className="flex justify-center">
-        <CiStar className="h-5 w-5" />
-      </div>
-    ),
+    cell: ({ row }) => <WatchlistButton />,
   },
   {
     accessorKey: "info",
