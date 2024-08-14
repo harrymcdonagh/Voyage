@@ -21,7 +21,7 @@ model User {
   email          String?   @unique
   emailVerified  DateTime? @map("email_verified")
   image          String?   @default("https://gravatar.com/avatar/?d=identicon")
-  role           String?
+  role           String?   @default("user")
   hashedPassword String?   @map("hashed_password")
   accounts       Account[]
   sessions       Session[]
