@@ -23,7 +23,9 @@ export default function RegistrationDialog({ open, onClose, status, message }: P
             <CircleCheckIcon className="h-12 w-12 text-green-500" />
             <div className="space-y-2 text-center">
               <h3 className="text-2xl font-bold">Registration Successful!</h3>
-              <p className="text-muted-foreground">Welcome to Voyage! The future of Finance...</p>
+              <p className="text-muted-foreground">
+                Welcome to Voyage! The future of Finance...
+              </p>
             </div>
             <DialogFooter>
               <div>
@@ -46,7 +48,8 @@ export default function RegistrationDialog({ open, onClose, status, message }: P
             <div className="space-y-2 text-center">
               <h3 className="text-2xl font-bold">Registration Failed</h3>
               <p className="text-muted-foreground">
-                Unfortunately, we couldn't register your account due to the following issue:
+                Unfortunately, we couldn&apos;t register your account due to the following
+                issue:
               </p>
               <p className="text-muted-foreground">{message}</p>
             </div>

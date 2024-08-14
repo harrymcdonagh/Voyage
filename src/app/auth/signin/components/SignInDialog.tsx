@@ -23,7 +23,9 @@ export default function SignInDialog({ open, onClose, status, message }: Props) 
             <CircleCheckIcon className="h-12 w-12 text-green-500" />
             <div className="space-y-2 text-center">
               <h3 className="text-2xl font-bold">Registration Successful!</h3>
-              <p className="text-muted-foreground">Welcome to Voyage! The future of Finance...</p>
+              <p className="text-muted-foreground">
+                Welcome to Voyage! The future of Finance...
+              </p>
             </div>
             <DialogFooter>
               <div>
@@ -39,14 +41,15 @@ export default function SignInDialog({ open, onClose, status, message }: Props) 
       {status === 400 && (
         <DialogContent className="sm:max-w-[425px]">
           <VisuallyHidden>
-            <DialogTitle>Registration Failed</DialogTitle>
+            <DialogTitle>Sign In Failed</DialogTitle>
           </VisuallyHidden>
           <div className="flex flex-col items-center justify-center gap-6 py-8">
             <CircleCheckIcon className="h-12 w-12 text-red-500" />
             <div className="space-y-2 text-center">
-              <h3 className="text-2xl font-bold">Registration Failed</h3>
+              <h3 className="text-2xl font-bold">Sign In Failed</h3>
               <p className="text-muted-foreground">
-                Unfortunately, we couldn't register your account due to the following issue:
+                Unfortunately, we couldn&apos;t sign into your account due to the
+                following issue:
               </p>
               <p className="text-muted-foreground">{message}</p>
             </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import localAxios from "@/src/lib/axios";
+import { localAxios } from "@/src/lib/axios";
 
 interface RemoveButtonProps {
   userId: string;

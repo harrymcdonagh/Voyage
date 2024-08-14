@@ -15,15 +15,16 @@ enum TransactionType {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  username      String?   @unique
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  role          String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String    @id @default(cuid())
+  name           String?
+  username       String?   @unique
+  email          String?   @unique
+  emailVerified  DateTime? @map("email_verified")
+  image          String?   @default("https://gravatar.com/avatar/?d=identicon")
+  role           String?
+  hashedPassword String?   @map("hashed_password")
+  accounts       Account[]
+  sessions       Session[]
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt

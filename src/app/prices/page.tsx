@@ -12,7 +12,7 @@ export default async function Prices() {
   const data = await getPrices();
   return (
     <div className="container mx-auto">
-      <h1 className="text-4xl font-bold text-center mb-5">Today's Prices</h1>
+      <h1 className="text-4xl font-bold text-center mb-5">Today&apos;s Prices</h1>
       <PriceTable columns={Columns} data={data} />
     </div>
   );

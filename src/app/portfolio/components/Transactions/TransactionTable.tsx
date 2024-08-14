@@ -64,7 +64,9 @@ export function TransactionTable<TData, TValue>({
         <Input
           placeholder="Search by name"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
         <div>
