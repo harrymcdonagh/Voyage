@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const localAxios = axios.create({
-  baseURL: process.env.DEV_URL, 
+  baseURL: process.env.DEV_URL,
 });
 
 const cmcAxios = axios.create({
@@ -20,7 +20,7 @@ cmcAxios.interceptors.request.use(
 
 const coinAxios = axios.create({
   baseURL: process.env.COIN_URL,
-})
+});
 
 coinAxios.interceptors.request.use(
   (config) => {

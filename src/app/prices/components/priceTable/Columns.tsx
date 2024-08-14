@@ -7,13 +7,17 @@ import Link from "next/link";
 import { SlEye } from "react-icons/sl";
 import { Coin } from "@/src/types/CoinSchema";
 import WatchlistButton from "./WatchlistButton";
+import { formatPrice } from "@/src/utils/format";
 
 export const Columns: ColumnDef<Coin>[] = [
   {
     accessorKey: "cmc_rank",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
           Rank <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -31,20 +35,25 @@ export const Columns: ColumnDef<Coin>[] = [
     accessorKey: "quote.USD.price",
     header: "Price ($)",
     cell: ({ row }) => {
-      return <span>${row.original.quote.USD.price}</span>;
+      return <span>${formatPrice(row.original.quote.USD.price)}</span>;
     },
   },
   {
     accessorKey: "quote.USD.percent_change_24h",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
           24h% <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const pchange = parseFloat(row.original.quote.USD.percent_change_24h.toString());
+      const pchange = parseFloat(
+        row.original.quote.USD.percent_change_24h.toFixed(3).toString()
+      );
       if (pchange < 0) {
         return <span className="text-red-600">{pchange}%</span>;
       } else {
@@ -55,7 +64,7 @@ export const Columns: ColumnDef<Coin>[] = [
   {
     accessorKey: "watchlist",
     header: "Watchlist",
-    cell: ({ row }) => <WatchlistButton />,
+    cell: ({ row }) => <WatchlistButton symbol={row.original.symbol} />,
   },
   {
     accessorKey: "info",

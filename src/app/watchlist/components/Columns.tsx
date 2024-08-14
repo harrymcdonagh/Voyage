@@ -7,13 +7,17 @@ import RemoveButton from "./RemoveButton";
 import { WatchlistCoin } from "@/src/types/WatchlistedCoinSchema";
 import Link from "next/link";
 import { SlEye } from "react-icons/sl";
+import { formatPrice } from "@/src/utils/format";
 
 export const Columns: ColumnDef<WatchlistCoin>[] = [
-  {
+  /*   {
     accessorKey: "rank",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
           Rank <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -22,23 +26,26 @@ export const Columns: ColumnDef<WatchlistCoin>[] = [
   {
     accessorKey: "name",
     header: "Name",
-  },
+  }, */
   {
     accessorKey: "symbol",
     header: "Symbol",
   },
-  {
+  /*   {
     accessorKey: "price",
     header: "Price ($)",
     cell: ({ row }) => {
-      return <span>${row.original.price}</span>;
+      return <span>${formatPrice(row.original.price)}</span>;
     },
   },
-  /* {
+  {
     accessorKey: "pchange",
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
           24h% <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -57,7 +64,8 @@ export const Columns: ColumnDef<WatchlistCoin>[] = [
     header: "Info",
     cell: ({ row }) => {
       return (
-        <Link className="flex justify-center" href={`/prices/${row.original.symbol}`}>
+        //Add back className="flex justify-center" after testing
+        <Link href={`/prices/${row.original.symbol}`}>
           <SlEye className="h-5 w-5" />
         </Link>
       );

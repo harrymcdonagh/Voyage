@@ -245,7 +245,11 @@ function XIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 }
 
 function SignInButton() {
-  return <Button onClick={() => signIn()}>SignIn</Button>;
+  return (
+    <Button variant="outline" onClick={() => signIn()}>
+      Sign In
+    </Button>
+  );
 }
 
 function SignOutButton() {

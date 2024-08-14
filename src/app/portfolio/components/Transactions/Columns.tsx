@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import RemoveButton from "./RemoveButton";
 import { Transaction } from "../../../../types/TransactionSchema";
+import { formatPrice, formatDate } from "@/src/utils/format";
 
 export const Columns: ColumnDef<Transaction>[] = [
   {
@@ -33,7 +34,7 @@ export const Columns: ColumnDef<Transaction>[] = [
     accessorKey: "price",
     header: "Price ($)",
     cell: ({ row }) => {
-      return <span>${row.original.price}</span>;
+      return <span>${formatPrice(row.original.price)}</span>;
     },
   },
   {
@@ -58,6 +59,9 @@ export const Columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "date",
     header: "Date",
+    cell: ({ row }) => {
+      return <span>{formatDate(row.original.date)}</span>;
+    },
   },
   {
     accessorKey: "type",
