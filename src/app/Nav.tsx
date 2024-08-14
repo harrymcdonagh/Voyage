@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
@@ -14,13 +16,13 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { signIn, signOut } from "../auth";
+import { signIn, signOut } from "next-auth/react";
 import { Lock } from "lucide-react";
-import getSession from "@/src/lib/getSession";
+import { useSession } from "next-auth/react";
 
-export default async function Nav() {
-  const session = await getSession();
-  const user = session?.user;
+export default function Nav() {
+  const session = useSession();
+  const user = session?.data?.user;
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background shadow-sm">
@@ -58,7 +60,7 @@ export default async function Nav() {
               </Link>
             </>
           )}
-          {!user && (
+          {!user && session.status !== "loading" && (
             <div className="flex items-center gap-4">
               {SignInButton()}
               <Link href="/auth/register">
@@ -71,7 +73,7 @@ export default async function Nav() {
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-7 w-7">
                   <AvatarImage
-                    src={`${session.user!.image}`}
+                    src={`${user!.image}`}
                     alt="@shadcn"
                     className="rounded-full hover:opacity-80 cursor-pointer"
                   />
@@ -126,7 +128,7 @@ export default async function Nav() {
               </div>
             </div>
             <nav className="grid gap-4 px-4 py-6">
-              {!user && (
+              {!user && session.status !== "loading" && (
                 <div>
                   {SignInButton()}
                   {SignOutButton()}
@@ -140,8 +142,7 @@ export default async function Nav() {
                   >
                     <Avatar className="h-7 w-7">
                       <AvatarImage
-                        src={`${user.image}`}
-                        alt="@shadcn"
+                        src={`${user!.image}`}
                         className="rounded-full hover:opacity-80 cursor-pointer"
                       />
                     </Avatar>
@@ -244,27 +245,9 @@ function XIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 }
 
 function SignInButton() {
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn();
-      }}
-    >
-      <Button variant="outline">Sign In</Button>
-    </form>
-  );
+  return <Button onClick={() => signIn()}>SignIn</Button>;
 }
 
 function SignOutButton() {
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
-      <Button type="submit">Logout</Button>
-    </form>
-  );
+  return <Button onClick={() => signOut({ callbackUrl: "/" })}>Logout</Button>;
 }

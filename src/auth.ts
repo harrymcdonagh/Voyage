@@ -9,7 +9,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   theme: {
     logo: "/logo.png",
   },
-  adapter: PrismaAdapter(prisma) as Adapter,
-  providers: [Google, GitHub],
   trustHost: true,
+  adapter: PrismaAdapter(prisma) as Adapter,
+  callbacks: {
+    session({ session, user }) {
+      session.user.role = user.role;
+      return session;
+    },
+  },
+  providers: [Google, GitHub],
 });
