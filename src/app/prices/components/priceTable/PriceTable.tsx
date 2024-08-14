@@ -30,7 +30,10 @@ interface PriceTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TData, TValue>) {
+export function PriceTable<TData, TValue>({
+  columns,
+  data,
+}: PriceTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -58,7 +61,9 @@ export function PriceTable<TData, TValue>({ columns, data }: PriceTableProps<TDa
         <Input
           placeholder="Search by coin name"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
       </div>

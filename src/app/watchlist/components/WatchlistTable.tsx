@@ -58,9 +58,11 @@ export function WatchlistTable<TData, TValue>({
     <div>
       <div className="flex items-center gap-3 py-4">
         <Input
-          placeholder="Search by name"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+          placeholder="Search by symbol"
+          value={(table.getColumn("symbol")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("symbol")?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
       </div>
