@@ -4,9 +4,22 @@ const QuoteCurrencySchema = z.object({
   price: z.number().min(0.000000001, "Price must be valid"),
   volume_24h: z.number().min(0, "Volume must be valid"),
   volume_change_24h: z.number().min(0, "Volume change must be valid"),
-  percent_change_1h: z.number().min(-100).max(100, "Percent change must be between -100 and 100"),
-  percent_change_24h: z.number().min(-100).max(100, "Percent change must be between -100 and 100"),
-  percent_change_7d: z.number().min(-100).max(100, "Percent change must be between -100 and 100"),
+  percent_change_1h: z
+    .number()
+    .min(-100)
+    .max(100, "Percent change must be between -100 and 100"),
+  percent_change_24h: z
+    .number()
+    .min(-100)
+    .max(100, "Percent change must be between -100 and 100"),
+  percent_change_7d: z
+    .number()
+    .min(-100)
+    .max(100, "Percent change must be between -100 and 100"),
+  percent_change_30d: z
+    .number()
+    .min(-100)
+    .max(100, "Percent change must be between -100 and 100"),
   market_cap: z.number().min(0, "Market cap must be valid"),
   market_cap_dominance: z.number().min(0, "Market cap dominance must be valid"),
   fully_diluted_market_cap: z.number().min(0, "Fully diluted market cap must be valid"),
@@ -34,8 +47,14 @@ export const CoinSchema = z.object({
   date_added: z.string().nonempty("Date added timestamp is required"),
   tags: z.array(z.string()).nonempty("At least one tag is required"),
   platform: z.string().nullable(),
-  self_reported_circulating_supply: z.number().min(0, "Self-reported circulating supply must be valid").nullable(),
-  self_reported_market_cap: z.number().min(0, "Self-reported market cap must be valid").nullable(),
+  self_reported_circulating_supply: z
+    .number()
+    .min(0, "Self-reported circulating supply must be valid")
+    .nullable(),
+  self_reported_market_cap: z
+    .number()
+    .min(0, "Self-reported market cap must be valid")
+    .nullable(),
   quote: QuoteSchema,
 });
 

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -56,12 +57,12 @@ export function WatchlistTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center gap-3 py-4">
+      <div className="flex items-center py-2">
         <Input
-          placeholder="Search by symbol"
-          value={(table.getColumn("symbol")?.getFilterValue() as string) ?? ""}
+          placeholder="Search by coin name"
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("symbol")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -73,7 +74,7 @@ export function WatchlistTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead className="text-center" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -86,7 +87,11 @@ export function WatchlistTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow
+                  className="text-center"
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -103,7 +108,6 @@ export function WatchlistTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-
         <div className="flex items-center justify-center space-x-2 py-4">
           <Button
             variant="outline"

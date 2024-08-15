@@ -64,7 +64,7 @@ export const Columns: ColumnDef<Coin>[] = [
   {
     accessorKey: "watchlist",
     header: "Watchlist",
-    cell: ({ row }) => <WatchlistButton symbol={row.original.symbol} />,
+    cell: ({ row }) => <WatchlistButton coinId={row.original.id} />,
   },
   {
     accessorKey: "info",

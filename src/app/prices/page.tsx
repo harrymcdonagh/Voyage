@@ -2,7 +2,6 @@ import { Coin } from "@/src/types/CoinSchema";
 import { Columns } from "./components/priceTable/Columns";
 import { PriceTable } from "./components/priceTable/PriceTable";
 import { cmcAxios } from "@/src/lib/axios";
-import getSession from "@/src/lib/getSession";
 
 async function getPrices(): Promise<Coin[]> {
   const response = await cmcAxios.get(`/v1/cryptocurrency/listings/latest`);
@@ -11,8 +10,6 @@ async function getPrices(): Promise<Coin[]> {
 
 export default async function Prices() {
   const data = await getPrices();
-  const session = await getSession();
-  const userId = session?.user?.id;
 
   return (
     <div className="container mx-auto">

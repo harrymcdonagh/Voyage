@@ -6,10 +6,10 @@ import { addToWatchlist } from "../../actions";
 import { useSession } from "next-auth/react";
 
 interface Props {
-  symbol: string;
+  coinId: number;
 }
 
-const WatchlistButton = ({ symbol }: Props) => {
+const WatchlistButton = ({ coinId }: Props) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const { data: session } = useSession();
@@ -17,7 +17,7 @@ const WatchlistButton = ({ symbol }: Props) => {
 
   const handleWatchlist = async () => {
     try {
-      const result = await addToWatchlist(userId, symbol);
+      const result = await addToWatchlist(userId, coinId);
       if (result) {
         setIsSelected(!isSelected);
       }

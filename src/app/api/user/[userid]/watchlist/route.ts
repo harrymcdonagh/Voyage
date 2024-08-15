@@ -30,7 +30,7 @@ export async function POST(
     const newWatchlistedCoin = await prisma.watchlist.create({
       data: {
         userId: userid,
-        symbol: body.symbol,
+        coinId: body.coinId,
       },
     });
 
