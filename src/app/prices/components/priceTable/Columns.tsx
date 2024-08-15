@@ -8,6 +8,7 @@ import { SlEye } from "react-icons/sl";
 import { Coin } from "@/src/types/CoinSchema";
 import WatchlistButton from "./WatchlistButton";
 import { formatPrice } from "@/src/utils/format";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
 export const Columns: ColumnDef<Coin>[] = [
   {
@@ -20,6 +21,24 @@ export const Columns: ColumnDef<Coin>[] = [
         >
           Rank <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "logo",
+    header: "Logo",
+    cell: ({ row }) => {
+      return (
+        <div className="flex justify-center">
+          <Avatar>
+            <AvatarImage
+              src="/placeholder-user.jpg"
+              className="rounded-full h-8"
+              alt={row.original.name}
+            />
+            <AvatarFallback>BTC</AvatarFallback>
+          </Avatar>
+        </div>
       );
     },
   },
@@ -39,6 +58,36 @@ export const Columns: ColumnDef<Coin>[] = [
     },
   },
   {
+    accessorKey: "quote.USD.market_cap",
+    header: "Market Cap ($)",
+    cell: ({ row }) => {
+      return <span>${formatPrice(row.original.quote.USD.market_cap)}</span>;
+    },
+  },
+  {
+    accessorKey: "quote.USD.percent_change_1h",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
+          1h% <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const pchange = parseFloat(
+        row.original.quote.USD.percent_change_1h.toFixed(3).toString()
+      );
+      if (pchange < 0) {
+        return <span className="text-red-600">{pchange}%</span>;
+      } else {
+        return <span className="text-green-600">{pchange}%</span>;
+      }
+    },
+  },
+  {
     accessorKey: "quote.USD.percent_change_24h",
     header: ({ column }) => {
       return (
@@ -53,6 +102,29 @@ export const Columns: ColumnDef<Coin>[] = [
     cell: ({ row }) => {
       const pchange = parseFloat(
         row.original.quote.USD.percent_change_24h.toFixed(3).toString()
+      );
+      if (pchange < 0) {
+        return <span className="text-red-600">{pchange}%</span>;
+      } else {
+        return <span className="text-green-600">{pchange}%</span>;
+      }
+    },
+  },
+  {
+    accessorKey: "quote.USD.percent_change_7d",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
+        >
+          7d% <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const pchange = parseFloat(
+        row.original.quote.USD.percent_change_7d.toFixed(3).toString()
       );
       if (pchange < 0) {
         return <span className="text-red-600">{pchange}%</span>;

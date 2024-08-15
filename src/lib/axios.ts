@@ -32,4 +32,8 @@ coinAxios.interceptors.request.use(
   }
 );
 
-export { localAxios, cmcAxios, coinAxios };
+const fngAxios = axios.create({
+  baseURL: process.env.FNG_URL,
+});
+
+export { localAxios, cmcAxios, coinAxios, fngAxios };

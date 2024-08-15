@@ -1,15 +1,26 @@
 "use server";
-import { localAxios } from "@/src/lib/axios";
+import { cmcAxios, fngAxios, localAxios } from "@/src/lib/axios";
+import { Coin } from "@/src/types/CoinSchema";
 
 export async function addToWatchlist(userId: string | undefined, coinId: number) {
   try {
     const response = await localAxios.post(`/api/user/${userId}/watchlist`, {
       coinId: coinId,
     });
-    console.log(`Added ${coinId} to watchlist`, response);
     return response.data;
   } catch (error) {
     console.error(`Error adding ${coinId} to watchlist`, error);
     throw error;
   }
+}
+
+export async function getFearAndGreed() {
+  const response = await fngAxios.get("");
+  const data = response.data;
+  return data.data[0];
+}
+
+export async function getPrices(): Promise<Coin[]> {
+  const response = await cmcAxios.get(`/v1/cryptocurrency/listings/latest`);
+  return response.data.data;
 }

@@ -20,7 +20,6 @@ export default async function Watchlist() {
 
   const userId = session?.user?.id;
   const data = await getWatchlistData(userId);
-  console.log(data);
 
   return (
     <div className="container mx-auto">
