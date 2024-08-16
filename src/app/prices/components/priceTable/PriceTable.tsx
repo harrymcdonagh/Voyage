@@ -67,9 +67,9 @@ export function PriceTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border shadow-lg">
         <Table>
-          <TableHeader className="bg-slate-900">
+          <TableHeader className="dark:bg-slate-900 bg-gray-200">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
