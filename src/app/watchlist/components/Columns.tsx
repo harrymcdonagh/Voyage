@@ -55,9 +55,9 @@ export const Columns: ColumnDef<Coin>[] = [
         row.original.quote.USD.percent_change_24h.toFixed(3).toString()
       );
       if (pchange < 0) {
-        return <span className="text-red-600">{pchange}%</span>;
+        return <span className="text-red-500">{pchange}%</span>;
       } else {
-        return <span className="text-green-600">{pchange}%</span>;
+        return <span className="text-green-500">{pchange}%</span>;
       }
     },
   },
@@ -78,9 +78,9 @@ export const Columns: ColumnDef<Coin>[] = [
         row.original.quote.USD.percent_change_7d.toFixed(3).toString()
       );
       if (pchange < 0) {
-        return <span className="text-red-600">{pchange}%</span>;
+        return <span className="text-red-500">{pchange}%</span>;
       } else {
-        return <span className="text-green-600">{pchange}%</span>;
+        return <span className="text-green-500">{pchange}%</span>;
       }
     },
   },
@@ -101,9 +101,9 @@ export const Columns: ColumnDef<Coin>[] = [
         row.original.quote.USD.percent_change_30d.toFixed(3).toString()
       );
       if (pchange < 0) {
-        return <span className="text-red-600">{pchange}%</span>;
+        return <span className="text-red-500">{pchange}%</span>;
       } else {
-        return <span className="text-green-600">{pchange}%</span>;
+        return <span className="text-green-500">{pchange}%</span>;
       }
     },
   },

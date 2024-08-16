@@ -32,7 +32,7 @@ export const Columns: ColumnDef<Coin>[] = [
         <div className="flex justify-center">
           <Avatar>
             <AvatarImage
-              src="/placeholder-user.jpg"
+              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${row.original.id}.png`}
               className="rounded-full h-8"
               alt={row.original.name}
             />
@@ -45,6 +45,13 @@ export const Columns: ColumnDef<Coin>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ row }) => {
+      return (
+        <div className="flex justify-center max-w-[150px] whitespace-normal break-words">
+          {row.original.name}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "symbol",
@@ -81,9 +88,9 @@ export const Columns: ColumnDef<Coin>[] = [
         row.original.quote.USD.percent_change_1h.toFixed(3).toString()
       );
       if (pchange < 0) {
-        return <span className="text-red-600">{pchange}%</span>;
+        return <span className="text-red-500">{pchange}%</span>;
       } else {
-        return <span className="text-green-600">{pchange}%</span>;
+        return <span className="text-green-500">{pchange}%</span>;
       }
     },
   },
@@ -104,9 +111,9 @@ export const Columns: ColumnDef<Coin>[] = [
         row.original.quote.USD.percent_change_24h.toFixed(3).toString()
       );
       if (pchange < 0) {
-        return <span className="text-red-600">{pchange}%</span>;
+        return <span className="text-red-500">{pchange}%</span>;
       } else {
-        return <span className="text-green-600">{pchange}%</span>;
+        return <span className="text-green-500">{pchange}%</span>;
       }
     },
   },
@@ -127,9 +134,9 @@ export const Columns: ColumnDef<Coin>[] = [
         row.original.quote.USD.percent_change_7d.toFixed(3).toString()
       );
       if (pchange < 0) {
-        return <span className="text-red-600">{pchange}%</span>;
+        return <span className="text-red-500">{pchange}%</span>;
       } else {
-        return <span className="text-green-600">{pchange}%</span>;
+        return <span className="text-green-500">{pchange}%</span>;
       }
     },
   },

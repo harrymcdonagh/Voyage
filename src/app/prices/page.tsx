@@ -8,7 +8,7 @@ export default async function Prices() {
 
   return (
     <main>
-      <Header />
+      <Header data={data} />
       <div className="container mx-auto">
         <h1 className="my-auto text-4xl font-bold text-center mt-7 mb-3">
           Today&apos;s Prices
