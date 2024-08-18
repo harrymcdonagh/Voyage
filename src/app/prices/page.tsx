@@ -2,6 +2,11 @@ import { Columns } from "./components/priceTable/Columns";
 import { PriceTable } from "./components/priceTable/PriceTable";
 import Header from "./components/header/Header";
 import { getPrices } from "./actions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Prices",
+};
 
 export default async function Prices() {
   const data = await getPrices();
