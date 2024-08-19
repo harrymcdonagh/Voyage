@@ -14,6 +14,16 @@ export async function addToWatchlist(userId: string | undefined, coinId: number)
   }
 }
 
+export async function getWatchlisted(userId: string | undefined) {
+  try {
+    const response = await localAxios.get(`/api/user/${userId}/watchlist`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error getting watchlist`, error);
+    throw error;
+  }
+}
+
 export async function getFearAndGreed() {
   const response = await fngAxios.get("");
   const data = response.data;

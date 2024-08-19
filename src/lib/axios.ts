@@ -5,12 +5,12 @@ const localAxios = axios.create({
 });
 
 const cmcAxios = axios.create({
-  baseURL: process.env.CMC_SANDBOX_URL,
+  baseURL: process.env.CMC_URL,
 });
 
 cmcAxios.interceptors.request.use(
   (config) => {
-    config.url += `?CMC_PRO_API_KEY=${process.env.CMC_SANDBOX_API_KEY}`;
+    config.url += `?CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
     return config;
   },
   (error) => {

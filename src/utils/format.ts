@@ -2,11 +2,18 @@ import { format, parseISO } from "date-fns";
 
 export function formatDate(isoString: string): string {
   const date = parseISO(isoString);
-  return format(date, "MMMM dd, yyyy, hh:mm:ss a 'UTC'");
+  return format(date, "MMMM dd, yyyy, hh:mm:ss a");
 }
 
-export const formatPercentage = (percentage: number) => {
-  return `${percentage.toFixed(2)}%`;
+import React from "react";
+
+export const formatPercentChange = (percentChange: number) => {
+  const pchange = parseFloat(percentChange.toFixed(3));
+  if (pchange < 0) {
+    return React.createElement("span", { className: "text-red-500" }, `${pchange}%`);
+  } else {
+    return React.createElement("span", { className: "text-green-500" }, `+${pchange}%`);
+  }
 };
 
 export const formatLargeNum = (largeNum: number) => {

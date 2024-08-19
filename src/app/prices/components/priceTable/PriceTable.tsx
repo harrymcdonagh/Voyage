@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -30,11 +29,16 @@ interface PriceTableProps<TData, TValue> {
   data: TData[];
 }
 
+type TableMeta<TData> = {
+  updateData: (updatedData: TData[]) => void;
+};
+
 export function PriceTable<TData, TValue>({
   columns,
-  data,
+  data: initialData,
 }: PriceTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [data, setData] = useState(initialData);
+  const [sorting, setSorting] = useState<SortingState>([{ id: "cmc_rank", desc: false }]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
@@ -53,6 +57,11 @@ export function PriceTable<TData, TValue>({
       columnFilters,
       rowSelection,
     },
+    meta: {
+      updateData: (updatedData: TData[]) => {
+        setData(updatedData);
+      },
+    } as TableMeta<TData>,
   });
 
   return (

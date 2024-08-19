@@ -1,16 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, TableMeta } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { SlEye } from "react-icons/sl";
 import { Coin } from "@/src/types/CoinSchema";
 import WatchlistButton from "./WatchlistButton";
-import { formatPrice } from "@/src/utils/format";
+import { formatPercentChange, formatPrice } from "@/src/utils/format";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
-export const Columns: ColumnDef<Coin>[] = [
+export const Columns: ColumnDef<Coin & { watchlisted: boolean }>[] = [
   {
     accessorKey: "cmc_rank",
     header: ({ column }) => {
@@ -84,14 +84,7 @@ export const Columns: ColumnDef<Coin>[] = [
       );
     },
     cell: ({ row }) => {
-      const pchange = parseFloat(
-        row.original.quote.USD.percent_change_1h.toFixed(3).toString()
-      );
-      if (pchange < 0) {
-        return <span className="text-red-500">{pchange}%</span>;
-      } else {
-        return <span className="text-green-500">{pchange}%</span>;
-      }
+      return formatPercentChange(row.original.quote.USD.percent_change_1h);
     },
   },
   {
@@ -107,14 +100,7 @@ export const Columns: ColumnDef<Coin>[] = [
       );
     },
     cell: ({ row }) => {
-      const pchange = parseFloat(
-        row.original.quote.USD.percent_change_24h.toFixed(3).toString()
-      );
-      if (pchange < 0) {
-        return <span className="text-red-500">{pchange}%</span>;
-      } else {
-        return <span className="text-green-500">{pchange}%</span>;
-      }
+      return formatPercentChange(row.original.quote.USD.percent_change_24h);
     },
   },
   {
@@ -130,20 +116,29 @@ export const Columns: ColumnDef<Coin>[] = [
       );
     },
     cell: ({ row }) => {
-      const pchange = parseFloat(
-        row.original.quote.USD.percent_change_7d.toFixed(3).toString()
-      );
-      if (pchange < 0) {
-        return <span className="text-red-500">{pchange}%</span>;
-      } else {
-        return <span className="text-green-500">{pchange}%</span>;
-      }
+      return formatPercentChange(row.original.quote.USD.percent_change_7d);
     },
   },
   {
     accessorKey: "watchlist",
     header: "Watchlist",
-    cell: ({ row }) => <WatchlistButton coinId={row.original.id} />,
+    cell: ({ row, table }) => (
+      <WatchlistButton
+        coinId={row.original.id}
+        isWatchlisted={row.original.watchlisted}
+        onWatchlistChange={(newState) => {
+          const updatedData = (
+            table.options.data as (Coin & { watchlisted: boolean })[]
+          ).map((item) =>
+            item.id === row.original.id ? { ...item, watchlisted: newState } : item
+          );
+          // @ts-ignore
+          (table.options.meta as TableMeta<Coin & { watchlisted: boolean }>).updateData(
+            updatedData
+          );
+        }}
+      />
+    ),
   },
   {
     accessorKey: "info",

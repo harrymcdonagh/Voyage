@@ -53,7 +53,7 @@ export const Columns: ColumnDef<Transaction>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span>${row.original.value}</span>;
+      return <span>${formatPrice(row.original.value)}</span>;
     },
   },
   {
