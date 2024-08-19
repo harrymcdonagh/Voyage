@@ -24,11 +24,11 @@ export async function getCoinMetadata(coinId: string) {
   }
 }
 
-const getStartOfYear = () => {
+const getYTD = () => {
   const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const startOfYear = new Date(currentYear, 0, 1);
-  return startOfYear.toISOString();
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+  return oneYearAgo.toISOString();
 };
 
 const getCurrentDate = () => {
@@ -41,7 +41,7 @@ export async function getCoinHistoricalData(symbol: string) {
     const response = await coinAxios.get(`/v1/exchangerate/${symbol}/USD/history`, {
       params: {
         period_id: "1DAY",
-        time_start: getStartOfYear(),
+        time_start: getYTD(),
         time_end: getCurrentDate(),
         limit: 1000,
       },

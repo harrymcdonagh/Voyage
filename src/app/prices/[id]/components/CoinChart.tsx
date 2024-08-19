@@ -5,11 +5,11 @@ import { createChart } from "lightweight-charts";
 import React, { useEffect, useRef } from "react";
 import ResizeObserver from "resize-observer-polyfill"; // Import the polyfill
 
-interface Props {
+/* interface Props {
   data: CoinData[];
-}
+} */
 
-const CoinChart = ({ data }: Props) => {
+const CoinChart = (/* { data }: Props */) => {
   const chartContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,6 +29,9 @@ const CoinChart = ({ data }: Props) => {
         horzLines: { color: "#444" },
       },
       autoSize: true,
+      crosshair: {
+        mode: 0,
+      },
     });
 
     const candlestickSeries = chart.addCandlestickSeries();
@@ -49,15 +52,44 @@ const CoinChart = ({ data }: Props) => {
       borderColor: "#71649C",
     });
 
-    const transformedData = data.map((item) => ({
+    /* const transformedData = data.map((item) => ({
       time: new Date(item.time_period_start).toISOString().split("T")[0],
       open: item.rate_open,
       high: item.rate_high,
       low: item.rate_low,
       close: item.rate_close,
-    }));
+    })); */
 
-    candlestickSeries.setData(transformedData);
+    candlestickSeries.setData([
+      {
+        time: "2018-10-19",
+        open: 180.34,
+        high: 180.99,
+        low: 178.57,
+        close: 179.85,
+      },
+      {
+        time: "2018-10-20",
+        open: 179.85,
+        high: 180.45,
+        low: 178.92,
+        close: 179.55,
+      },
+      {
+        time: "2018-10-21",
+        open: 179.55,
+        high: 180.12,
+        low: 178.75,
+        close: 179.25,
+      },
+      {
+        time: "2018-10-22",
+        open: 179.25,
+        high: 180.05,
+        low: 178.88,
+        close: 179.95,
+      },
+    ]);
 
     return () => {
       chart.remove();

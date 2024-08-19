@@ -13,7 +13,23 @@ interface Props {
 async function CoinPage({ params: { id } }: Props) {
   const data = await getCoinData(id);
   const metadata = await getCoinMetadata(id);
-  const historicalData = await getCoinHistoricalData("BTC");
+  //const historicalData = await getCoinHistoricalData(data.symbol);
+  const testData = [
+    { time: "2022-01-01", open: 100, high: 150, low: 80, close: 120 },
+    { time: "2022-01-02", open: 120, high: 180, low: 100, close: 150 },
+    { time: "2022-01-03", open: 150, high: 200, low: 120, close: 180 },
+    { time: "2022-01-01", open: 100, high: 150, low: 80, close: 120 },
+    { time: "2022-01-02", open: 120, high: 180, low: 100, close: 150 },
+    { time: "2022-01-03", open: 150, high: 200, low: 120, close: 180 },
+    { time: "2022-01-01", open: 100, high: 150, low: 80, close: 120 },
+    { time: "2022-01-02", open: 120, high: 180, low: 100, close: 150 },
+    { time: "2022-01-03", open: 150, high: 200, low: 120, close: 180 },
+    { time: "2022-01-01", open: 100, high: 150, low: 80, close: 120 },
+    { time: "2022-01-02", open: 120, high: 180, low: 100, close: 150 },
+    { time: "2022-01-03", open: 150, high: 200, low: 120, close: 180 },
+
+    // Add more candlestick data here if needed
+  ];
 
   return (
     <div className="text-foreground flex flex-col md:flex-row relative">
@@ -22,12 +38,14 @@ async function CoinPage({ params: { id } }: Props) {
         <CoinStats data={data} />
         <CoinLinks metadata={metadata} />
       </div>
-      <div className="flex-1 min-w-0 p-6 md:p-8 md:ml-[400px] md:pt-[64px]">
-        <section>
-          <h2 className="text-3xl font-bold">Price History</h2>
-          <CoinChart data={historicalData} />
+      <div className="flex-1 min-w-0 p-6 md:p-8 md:ml-[400px]">
+        <section className="border border-slate-700 rounded-lg p-6 md:p-8 mb-4">
+          <h2 className="text-3xl font-bold">Price History (YTD)</h2>
+          <CoinChart /* data={testData} */ />
         </section>
-        <CoinDescription name={data.name} description={metadata.description} />
+        <section className="border border-slate-700 rounded-lg p-6 md:p-8">
+          <CoinDescription name={data.name} description={metadata.description} />
+        </section>
       </div>
     </div>
   );
