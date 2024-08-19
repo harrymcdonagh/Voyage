@@ -1,5 +1,5 @@
 import React from "react";
-import { getCoinData, getCoinMetadata } from "./actions";
+import { getCoinData, getCoinHistoricalData, getCoinMetadata } from "./actions";
 import CoinHeader from "./components/CoinHeader";
 import CoinStats from "./components/CoinStats";
 import CoinLinks from "./components/CoinLinks";
@@ -13,6 +13,7 @@ interface Props {
 async function CoinPage({ params: { id } }: Props) {
   const data = await getCoinData(id);
   const metadata = await getCoinMetadata(id);
+  const historicalData = await getCoinHistoricalData("BTC");
 
   return (
     <div className="text-foreground flex flex-col md:flex-row relative">
@@ -24,7 +25,7 @@ async function CoinPage({ params: { id } }: Props) {
       <div className="flex-1 min-w-0 p-6 md:p-8 md:ml-[400px] md:pt-[64px]">
         <section>
           <h2 className="text-3xl font-bold">Price History</h2>
-          <CoinChart />
+          <CoinChart data={historicalData} />
         </section>
         <CoinDescription name={data.name} description={metadata.description} />
       </div>
