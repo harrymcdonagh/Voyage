@@ -33,6 +33,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.20",
+    "lightweight-charts": "^4.2.0",
     "lucide-react": "^0.418.0",
     "next": "14.2.5",
     "next-auth": "^5.0.0-beta.20",
@@ -43,6 +44,7 @@
     "react-hook-form": "^7.52.2",
     "react-icons": "^5.2.1",
     "recharts": "^2.12.7",
+    "resize-observer-polyfill": "^1.5.1",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"

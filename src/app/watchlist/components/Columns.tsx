@@ -112,7 +112,7 @@ export const Columns: ColumnDef<Coin>[] = [
     header: "Info",
     cell: ({ row }) => {
       return (
-        <Link className="flex justify-center" href={`/prices/${row.original.symbol}`}>
+        <Link className="flex justify-center" href={`/prices/${row.original.id}`}>
           <SlEye className="h-5 w-5" />
         </Link>
       );

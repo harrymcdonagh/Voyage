@@ -5,8 +5,24 @@ export function formatDate(isoString: string): string {
   return format(date, "MMMM dd, yyyy, hh:mm:ss a 'UTC'");
 }
 
-export const formatPrice = (price: number) => {
-  let decimals;
+export const formatPercentage = (percentage: number) => {
+  return `${percentage.toFixed(2)}%`;
+};
+
+export const formatLargeNum = (largeNum: number) => {
+  if (largeNum >= 1_000_000_000_000) {
+    return `${(largeNum / 1_000_000_000_000).toFixed(2)}T`;
+  } else if (largeNum >= 1_000_000_000) {
+    return `${(largeNum / 1_000_000_000).toFixed(2)}B`;
+  } else if (largeNum >= 1_000_000) {
+    return `${(largeNum / 1_000_000).toFixed(2)}M`;
+  } else {
+    return `${largeNum}`;
+  }
+};
+
+export const formatPrice = (price: number): string => {
+  let decimals: number;
 
   if (price >= 1000) {
     decimals = 2;
@@ -20,7 +36,10 @@ export const formatPrice = (price: number) => {
     decimals = 8;
   }
 
-  return price.toFixed(decimals);
+  const formattedNumber = price.toFixed(decimals);
+  const [integerPart, decimalPart] = formattedNumber.split(".");
+  const integerWithCommas = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return decimalPart ? `${integerWithCommas}.${decimalPart}` : integerWithCommas;
 };
 
 export const formatSeconds = (seconds: number) => {

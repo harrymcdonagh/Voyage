@@ -36,7 +36,7 @@ export const Columns: ColumnDef<Coin>[] = [
               className="rounded-full h-8"
               alt={row.original.name}
             />
-            <AvatarFallback>BTC</AvatarFallback>
+            <AvatarFallback>{row.original.symbol}</AvatarFallback>
           </Avatar>
         </div>
       );
@@ -150,7 +150,7 @@ export const Columns: ColumnDef<Coin>[] = [
     header: "Info",
     cell: ({ row }) => {
       return (
-        <Link className="flex justify-center" href={`/prices/${row.original.symbol}`}>
+        <Link className="flex justify-center" href={`/prices/${row.original.id}`}>
           <SlEye className="h-5 w-5" />
         </Link>
       );
