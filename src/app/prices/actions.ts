@@ -14,6 +14,16 @@ export async function addToWatchlist(userId: string | undefined, coinId: number)
   }
 }
 
+export async function removeFromWatchlist(userId: string | undefined, coinId: number) {
+  try {
+    const response = await localAxios.delete(`/api/user/${userId}/watchlist/${coinId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error removing ${coinId} from watchlist`, error);
+    throw error;
+  }
+}
+
 export async function getWatchlisted(userId: string | undefined) {
   try {
     const response = await localAxios.get(`/api/user/${userId}/watchlist`);

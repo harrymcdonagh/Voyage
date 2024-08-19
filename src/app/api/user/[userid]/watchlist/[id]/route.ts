@@ -1,21 +1,40 @@
 import prisma from "@/src/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(request: NextRequest, { params }: { params: { userid: string } }) {
-    const { userid } = params;
-    const body = await request.json();
-    const watchlistedId = body.id;
-  
-    try {
-      await prisma.watchlist.delete({
-        where: {
-          id: watchlistedId,
-          userId: userid 
-        }
-      });
-  
-      return NextResponse.json({ message: 'Transaction deleted successfully' });
-    } catch (error) {
-      return NextResponse.json({ message: 'Error deleting transaction', error }, { status: 500 });
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { userid: string; id: string } }
+) {
+  const { userid, id } = params;
+  const coinId = parseInt(id);
+
+  try {
+    const watchlisted = await prisma.watchlist.findFirst({
+      where: {
+        coinId: coinId,
+        userId: userid,
+      },
+    });
+
+    if (!watchlisted) {
+      return NextResponse.json(
+        { message: "Watchlist instance not found" },
+        { status: 404 }
+      );
     }
+
+    await prisma.watchlist.delete({
+      where: {
+        watchlistId: watchlisted.watchlistId,
+      },
+    });
+
+    return NextResponse.json({ message: "Watchlist instance deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting Watchlist instance:", error);
+    return NextResponse.json(
+      { message: "Error deleting Watchlist instance", error },
+      { status: 500 }
+    );
+  }
 }

@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { addToWatchlist } from "../../actions";
+import { addToWatchlist, removeFromWatchlist } from "../../actions";
 import { useSession } from "next-auth/react";
+import { localAxios } from "@/src/lib/axios";
 
 interface Props {
   coinId: number;
@@ -18,13 +19,25 @@ const WatchlistButton = ({ coinId, isWatchlisted, onWatchlistChange }: Props) =>
   const handleWatchlist = async () => {
     if (!userId) return;
 
-    try {
-      const result = await addToWatchlist(userId, coinId);
-      if (result) {
-        onWatchlistChange(!isWatchlisted);
+    if (isWatchlisted) {
+      try {
+        const result = await removeFromWatchlist(userId, coinId);
+        if (result) {
+          onWatchlistChange(!isWatchlisted);
+        }
+      } catch (error) {
+        console.error("Error removing from watchlist:", error);
       }
-    } catch (error) {
-      console.error("Error adding to watchlist:", error);
+    }
+    if (!isWatchlisted) {
+      try {
+        const result = await addToWatchlist(userId, coinId);
+        if (result) {
+          onWatchlistChange(!isWatchlisted);
+        }
+      } catch (error) {
+        console.error("Error adding to watchlist:", error);
+      }
     }
   };
 
