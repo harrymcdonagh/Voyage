@@ -5,11 +5,7 @@ import { createChart } from "lightweight-charts";
 import React, { useEffect, useRef } from "react";
 import ResizeObserver from "resize-observer-polyfill"; // Import the polyfill
 
-/* interface Props {
-  data: CoinData[];
-} */
-
-const CoinChart = (/* { data }: Props */) => {
+const CoinChart = () => {
   const chartContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,44 +48,44 @@ const CoinChart = (/* { data }: Props */) => {
       borderColor: "#71649C",
     });
 
-    /* const transformedData = data.map((item) => ({
-      time: new Date(item.time_period_start).toISOString().split("T")[0],
-      open: item.rate_open,
-      high: item.rate_high,
-      low: item.rate_low,
-      close: item.rate_close,
-    })); */
+    // Generate more data points
+    const generateData = (count: number) => {
+      const data = [];
+      let time = new Date("2023-01-01").getTime();
+      let open = 100;
+      let high = 105;
+      let low = 95;
+      let close = 100;
 
-    candlestickSeries.setData([
-      {
-        time: "2018-10-19",
-        open: 180.34,
-        high: 180.99,
-        low: 178.57,
-        close: 179.85,
-      },
-      {
-        time: "2018-10-20",
-        open: 179.85,
-        high: 180.45,
-        low: 178.92,
-        close: 179.55,
-      },
-      {
-        time: "2018-10-21",
-        open: 179.55,
-        high: 180.12,
-        low: 178.75,
-        close: 179.25,
-      },
-      {
-        time: "2018-10-22",
-        open: 179.25,
-        high: 180.05,
-        low: 178.88,
-        close: 179.95,
-      },
-    ]);
+      for (let i = 0; i < count; i++) {
+        const date = new Date(time);
+        const formattedDate = date.toISOString().split("T")[0];
+
+        data.push({
+          time: formattedDate,
+          open: open,
+          high: high,
+          low: low,
+          close: close,
+        });
+
+        // Simulate price changes
+        const change = (Math.random() - 0.5) * 10;
+        open = close;
+        close = Math.max(0, open + change);
+        high = Math.max(open, close) + Math.random() * 5;
+        low = Math.min(open, close) - Math.random() * 5;
+
+        // Move to next day
+        time += 24 * 60 * 60 * 1000;
+      }
+
+      return data;
+    };
+
+    const moreData = generateData(1000);
+
+    candlestickSeries.setData(moreData);
 
     return () => {
       chart.remove();

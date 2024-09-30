@@ -19,12 +19,14 @@ async function CoinPage({ params: { id } }: Props) {
     <div className="text-foreground flex flex-col md:flex-row relative">
       <div className="md:fixed md:top-[64px] md:left-0 md:h-[calc(100vh-64px)] md:w-[400px] md:overflow-y-auto p-6 md:p-8 border border-slate-700 rounded-lg">
         <CoinHeader name={data.name} symbol={data.symbol} id={data.id} />
-        <CoinStats data={data} />
+        <div className="px-4">
+          <CoinStats data={data} />
+        </div>
         <CoinLinks metadata={metadata} />
       </div>
       <div className="flex-1 min-w-0 p-6 md:p-8 md:ml-[400px]">
         <section className="border border-slate-700 rounded-lg p-6 md:p-8 mb-4">
-          <h2 className="text-3xl font-bold">Price History (YTD)</h2>
+          <h2 className="text-3xl font-bold">Price History (Sample Data)</h2>
           <CoinChart /* data={historicalData} */ />
         </section>
         <section className="border border-slate-700 rounded-lg p-6 md:p-8">

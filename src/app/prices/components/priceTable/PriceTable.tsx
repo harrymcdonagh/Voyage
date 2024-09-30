@@ -117,10 +117,6 @@ export function PriceTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <div className="flex items-centertext-sm justify-center text-muted-foreground mt-2">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} coins watchlisted.
-        </div>
         <div className="flex items-center justify-center space-x-2 py-4">
           <Button
             variant="outline"

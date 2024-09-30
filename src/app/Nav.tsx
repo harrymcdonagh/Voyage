@@ -19,6 +19,7 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { signIn, signOut } from "next-auth/react";
 import { Lock } from "lucide-react";
 import { useSession } from "next-auth/react";
+import React from "react";
 
 export default function Nav() {
   const session = useSession();
@@ -73,7 +74,7 @@ export default function Nav() {
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-7 w-7">
                   <AvatarImage
-                    src={`${user!.image}`}
+                    src={`${user?.image}`}
                     alt="@shadcn"
                     className="rounded-full hover:opacity-80 cursor-pointer"
                   />
