@@ -1,5 +1,3 @@
-// This component is used as the Suspense fallback for all routes. It renders
-// instantly because it is part of the root layout bundle.
 import { IoRocketOutline } from "react-icons/io5";
 
 const loading = () => {
