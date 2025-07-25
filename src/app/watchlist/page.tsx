@@ -2,9 +2,7 @@ import getSession from "@/src/lib/getSession";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { WatchlistTable } from "./components/WatchlistTable";
-import { Columns } from "./components/Columns";
 import { getWatchlistData } from "./actions";
-import { ColumnDef } from "@tanstack/react-table";
 
 export const metadata: Metadata = {
   title: "Watchlist",
@@ -24,7 +22,7 @@ export default async function Watchlist() {
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl font-bold text-center mb-5">Your Watchlist</h1>
-      <WatchlistTable columns={Columns as ColumnDef<unknown, unknown>[]} data={data} />
+      <WatchlistTable userId={userId} initialData={data} />
     </div>
   );
 }

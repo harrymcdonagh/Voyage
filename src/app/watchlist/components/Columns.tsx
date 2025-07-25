@@ -7,8 +7,12 @@ import Link from "next/link";
 import { SlEye } from "react-icons/sl";
 import { Coin } from "@/src/types/CoinSchema";
 import { formatPrice } from "@/src/utils/format";
+import RemoveButton from "./RemoveButton";
 
-export const Columns: ColumnDef<Coin>[] = [
+export const getColumns = (
+  userId: string | undefined,
+  mutate: () => void
+): ColumnDef<Coin>[] => [
   {
     accessorKey: "name",
     header: "Name",
@@ -117,5 +121,18 @@ export const Columns: ColumnDef<Coin>[] = [
         </Link>
       );
     },
+  },
+  {
+    accessorKey: "remove",
+    header: "Remove",
+    cell: ({ row }) => (
+      <div className="flex justify-center">
+        <RemoveButton
+          userId={userId ?? ""}
+          id={row.original.id.toString()}
+          mutate={mutate}
+        />
+      </div>
+    ),
   },
 ];

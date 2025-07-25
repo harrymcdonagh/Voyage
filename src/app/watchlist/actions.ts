@@ -1,4 +1,5 @@
 import { cmcAxios, localAxios } from "@/src/lib/axios";
+import { Coin } from "@/src/types/CoinSchema";
 
 async function getWatchlistCoinData(coinIds: number[]) {
   try {
@@ -18,7 +19,9 @@ async function getWatchlist(userId: string | undefined) {
   return response.data;
 }
 
-export async function getWatchlistData(userId: string | undefined) {
+export async function getWatchlistData(
+  userId: string | undefined
+): Promise<Coin[]> {
   const watchlist = await getWatchlist(userId);
   const coinIds = watchlist.map((coin: { coinId: number }) => coin.coinId);
 
@@ -30,7 +33,7 @@ export async function getWatchlistData(userId: string | undefined) {
   }
 
   // Convert the response into an array of coin details
-  const detailedData = Object.values(coinData);
+  const detailedData = Object.values(coinData) as Coin[];
 
   return detailedData;
 }

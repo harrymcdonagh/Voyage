@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
+import useSWR from "swr";
 
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   flexRender,
@@ -25,18 +25,30 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface WatchlistTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+import { getColumns } from "./Columns";
+import { localAxios } from "@/src/lib/axios";
+import { Coin } from "@/src/types/CoinSchema";
+
+interface WatchlistTableProps {
+  userId: string | undefined;
+  initialData?: Coin[];
 }
 
-export function WatchlistTable<TData, TValue>({
-  columns,
-  data,
-}: WatchlistTableProps<TData, TValue>) {
+const fetcher = (url: string) =>
+  localAxios.get(url).then((res) => res.data as Coin[]);
+
+export function WatchlistTable({ userId, initialData }: WatchlistTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+
+  const { data = initialData ?? [], mutate } = useSWR<Coin[]>(
+    userId ? `/api/user/${userId}/watchlist/coins` : null,
+    fetcher,
+    { fallbackData: initialData }
+  );
+
+  const columns = getColumns(userId, mutate);
 
   const table = useReactTable({
     data,

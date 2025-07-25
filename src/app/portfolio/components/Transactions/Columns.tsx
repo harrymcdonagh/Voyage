@@ -8,7 +8,7 @@ import EditTransaction from "./EditTransaction";
 import { Transaction } from "../../../../types/TransactionSchema";
 import { formatPrice, formatDate } from "@/src/utils/format";
 
-export const Columns: ColumnDef<Transaction>[] = [
+export const getColumns = (mutate: () => void): ColumnDef<Transaction>[] => [
   {
     accessorKey: "name",
     header: "Name",
@@ -62,11 +62,13 @@ export const Columns: ColumnDef<Transaction>[] = [
         <EditTransaction
           userId={row.original.userId}
           transaction={row.original}
-          onUpdated={() => {
-            /* placeholder: refresh data */
-          }}
+          mutate={mutate}
         />
-        <RemoveButton userId={row.original.userId} id={row.original.id} />
+        <RemoveButton
+          userId={row.original.userId}
+          id={row.original.id}
+          mutate={mutate}
+        />
       </div>
     ),
   },
