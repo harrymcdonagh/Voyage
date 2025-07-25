@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/src/lib/prisma";
 import { cmcAxios } from "@/src/lib/axios";
+import { auth } from "@/src/auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { userid: string } }
 ) {
   const { userid } = params;
+
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+  }
+  if (session.user.id !== userid) {
+    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+  }
 
   try {
     const watchlisted = await prisma.watchlist.findMany({
