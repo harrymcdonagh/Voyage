@@ -64,8 +64,6 @@ export default function AddTransaction({ userId, mutate }: AddTransactionProps) 
       date: new Date(formData.date).toISOString(),
     };
 
-    console.log("Submitting crypto data:", dataToSubmit);
-
     try {
       await localAxios.post(`/api/user/${userId}/transactions`, dataToSubmit);
       mutate();
