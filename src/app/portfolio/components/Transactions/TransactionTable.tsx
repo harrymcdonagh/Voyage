@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import {
   ColumnDef,
@@ -69,31 +70,27 @@ export function TransactionTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <div>
-          <AddTransaction userId={userId} />
-        </div>
+        <AddTransaction userId={userId} />
       </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
+            {table.getHeaderGroups().map((hg) => (
+              <TableRow key={hg.id}>
+                {hg.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {cell.column.columnDef.header === "Info" && (
@@ -113,7 +110,6 @@ export function TransactionTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-
         <div className="flex items-center justify-center space-x-2 py-4">
           <Button
             variant="outline"

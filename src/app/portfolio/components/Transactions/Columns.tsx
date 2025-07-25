@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import RemoveButton from "./RemoveButton";
+import EditTransaction from "./EditTransaction";
 import { Transaction } from "../../../../types/TransactionSchema";
 import { formatPrice, formatDate } from "@/src/utils/format";
 
@@ -11,57 +12,43 @@ export const Columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => {
-      return (
-        <span>
-          {row.original.name} ({row.original.symbol})
-        </span>
-      );
-    },
+    cell: ({ row }) => (
+      <span>
+        {row.original.name} ({row.original.symbol})
+      </span>
+    ),
   },
   {
     accessorKey: "amount",
     header: "Amount",
-    cell: ({ row }) => {
-      return (
-        <span>
-          {row.original.amount} {row.original.symbol}
-        </span>
-      );
-    },
+    cell: ({ row }) => (
+      <span>
+        {row.original.amount} {row.original.symbol}
+      </span>
+    ),
   },
   {
     accessorKey: "price",
     header: "Price ($)",
-    cell: ({ row }) => {
-      return <span>${formatPrice(row.original.price)}</span>;
-    },
+    cell: ({ row }) => <span>${formatPrice(row.original.price)}</span>,
   },
   {
     accessorKey: "value",
-    header: ({ column }) => {
-      return (
-        <div>
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() == "asc")}
-          >
-            Value <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return <span>${formatPrice(row.original.value)}</span>;
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        className="p-0"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Value <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <span>${formatPrice(row.original.value)}</span>,
   },
   {
     accessorKey: "date",
     header: "Date",
-    cell: ({ row }) => {
-      return <span>{formatDate(row.original.date)}</span>;
-    },
+    cell: ({ row }) => <span>{formatDate(row.original.date)}</span>,
   },
   {
     accessorKey: "type",
@@ -72,7 +59,13 @@ export const Columns: ColumnDef<Transaction>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="flex gap-2">
-        <Button variant="outline">Edit</Button>
+        <EditTransaction
+          userId={row.original.userId}
+          transaction={row.original}
+          onUpdated={() => {
+            /* placeholder: refresh data */
+          }}
+        />
         <RemoveButton userId={row.original.userId} id={row.original.id} />
       </div>
     ),

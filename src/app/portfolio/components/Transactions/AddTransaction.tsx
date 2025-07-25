@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { localAxios } from "@/src/lib/axios";
 import {
@@ -32,7 +33,7 @@ interface CryptoData {
   type: "BUY" | "SELL";
 }
 
-export default function AddTransaction({ userId }: { userId?: string }) {
+export default function AddTransaction({ userId }: { userId: string | undefined }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<CryptoData>({
     name: "",
@@ -50,35 +51,35 @@ export default function AddTransaction({ userId }: { userId?: string }) {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!userId) {
-      console.error("User ID is undefined");
-      return;
-    }
 
     const dataToSubmit = {
       ...formData,
       date: new Date(formData.date).toISOString(),
     };
 
-    try {
-      await localAxios.post(`/api/user/${userId}/transactions`, dataToSubmit);
-      console.log("Transaction added successfully:", dataToSubmit);
-    } catch (error) {
-      console.error("Failed to add transaction:", error);
-    } finally {
-      setFormData({
-        name: "",
-        amount: 0,
-        price: 0,
-        symbol: "",
-        date: new Date().toISOString().slice(0, 16),
-        type: "BUY",
-      });
-      setOpen(false);
-    }
+    console.log("Submitting crypto data:", dataToSubmit);
+
+    const handleAdd = async () => {
+      try {
+        await localAxios.post(`/api/user/${userId}/transactions`, dataToSubmit);
+        console.log("Transaction added");
+      } catch (error) {
+        console.error("Failed to add transaction:", error);
+      }
+    };
+    handleAdd();
+
+    setFormData({
+      name: "",
+      amount: 0,
+      price: 0,
+      symbol: "",
+      date: new Date().toISOString().slice(0, 16),
+      type: "BUY",
+    });
+    setOpen(false);
   };
 
   return (
@@ -99,6 +100,7 @@ export default function AddTransaction({ userId }: { userId?: string }) {
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-4 py-4">
+              {/* Name */}
               <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -109,7 +111,7 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                   required
                 />
               </div>
-
+              {/* Symbol */}
               <div className="grid gap-2">
                 <Label htmlFor="symbol">Symbol</Label>
                 <Input
@@ -122,7 +124,7 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                   required
                 />
               </div>
-
+              {/* Amount & Price */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="amount">Amount</Label>
@@ -134,11 +136,10 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                     onChange={(e) =>
                       handleInputChange("amount", parseFloat(e.target.value) || 0)
                     }
-                    placeholder="0.5"
+                    placeholder="1.5"
                     required
                   />
                 </div>
-
                 <div className="grid gap-2">
                   <Label htmlFor="price">Price</Label>
                   <Input
@@ -149,12 +150,12 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                     onChange={(e) =>
                       handleInputChange("price", parseFloat(e.target.value) || 0)
                     }
-                    placeholder="30000"
+                    placeholder="45000"
                     required
                   />
                 </div>
               </div>
-
+              {/* Type */}
               <div className="grid gap-2">
                 <Label htmlFor="type">Transaction Type</Label>
                 <Select
@@ -164,7 +165,7 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select transaction type" />
+                    <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="BUY">BUY</SelectItem>
@@ -172,7 +173,7 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                   </SelectContent>
                 </Select>
               </div>
-
+              {/* Date */}
               <div className="grid gap-2">
                 <Label htmlFor="date">Date & Time</Label>
                 <Input
@@ -184,7 +185,6 @@ export default function AddTransaction({ userId }: { userId?: string }) {
                 />
               </div>
             </div>
-
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                 Cancel

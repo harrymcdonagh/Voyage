@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { localAxios } from "@/src/lib/axios";
+import { Trash2 } from "lucide-react"; // bin icon
 
 interface RemoveButtonProps {
   userId: string;
@@ -19,8 +20,8 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({ userId, id }) => {
   };
 
   return (
-    <Button variant="destructive" onClick={handleRemove}>
-      Remove
+    <Button variant="destructive" size="sm" onClick={handleRemove}>
+      <Trash2 className="h-4 w-4" />
     </Button>
   );
 };
