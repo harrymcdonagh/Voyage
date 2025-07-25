@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import useSWR from "swr";
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   flexRender,
@@ -26,21 +26,30 @@ import { FiChevronRight } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AddTransaction from "./AddTransaction";
+import { getColumns } from "./Columns";
+import { localAxios } from "@/src/lib/axios";
+import { Transaction } from "@/src/types/TransactionSchema";
 
-interface TransactionTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface TransactionTableProps {
   userId: string | undefined;
+  initialData?: Transaction[];
 }
 
-export function TransactionTable<TData, TValue>({
-  columns,
-  data,
-  userId,
-}: TransactionTableProps<TData, TValue>) {
+const fetcher = (url: string) =>
+  localAxios.get(url).then((res) => res.data as Transaction[]);
+
+export function TransactionTable({ userId, initialData }: TransactionTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+
+  const { data = initialData ?? [], mutate } = useSWR<Transaction[]>(
+    userId ? `/api/user/${userId}/transactions` : null,
+    fetcher,
+    { fallbackData: initialData }
+  );
+
+  const columns = getColumns(mutate);
 
   const table = useReactTable({
     data,
@@ -70,7 +79,7 @@ export function TransactionTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <AddTransaction userId={userId} />
+        <AddTransaction userId={userId} mutate={mutate} />
       </div>
       <div className="rounded-md border">
         <Table>

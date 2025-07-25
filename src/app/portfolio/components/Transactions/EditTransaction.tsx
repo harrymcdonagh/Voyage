@@ -36,13 +36,13 @@ interface CryptoData {
 interface EditTransactionProps {
   userId?: string;
   transaction: CryptoData;
-  onUpdated?: (updated: CryptoData) => void;
+  mutate: () => void;
 }
 
 export default function EditTransaction({
   userId,
   transaction,
-  onUpdated,
+  mutate,
 }: EditTransactionProps) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<Omit<CryptoData, "id">>({
@@ -84,11 +84,11 @@ export default function EditTransaction({
     };
 
     try {
-      const { data: updated } = await localAxios.put<CryptoData>(
+      await localAxios.put<CryptoData>(
         `/api/user/${userId}/transactions/${transaction.id}`,
         payload
       );
-      onUpdated && onUpdated(updated);
+      mutate();
     } catch (error) {
       console.error("Failed to update transaction:", error);
     } finally {

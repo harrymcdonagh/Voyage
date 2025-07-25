@@ -24,6 +24,11 @@ import {
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 
+interface AddTransactionProps {
+  userId: string | undefined;
+  mutate: () => void;
+}
+
 interface CryptoData {
   name: string;
   amount: number;
@@ -33,7 +38,7 @@ interface CryptoData {
   type: "BUY" | "SELL";
 }
 
-export default function AddTransaction({ userId }: { userId: string | undefined }) {
+export default function AddTransaction({ userId, mutate }: AddTransactionProps) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<CryptoData>({
     name: "",
@@ -51,7 +56,7 @@ export default function AddTransaction({ userId }: { userId: string | undefined 
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const dataToSubmit = {
@@ -61,15 +66,12 @@ export default function AddTransaction({ userId }: { userId: string | undefined 
 
     console.log("Submitting crypto data:", dataToSubmit);
 
-    const handleAdd = async () => {
-      try {
-        await localAxios.post(`/api/user/${userId}/transactions`, dataToSubmit);
-        console.log("Transaction added");
-      } catch (error) {
-        console.error("Failed to add transaction:", error);
-      }
-    };
-    handleAdd();
+    try {
+      await localAxios.post(`/api/user/${userId}/transactions`, dataToSubmit);
+      mutate();
+    } catch (error) {
+      console.error("Failed to add transaction:", error);
+    }
 
     setFormData({
       name: "",
