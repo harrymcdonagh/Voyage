@@ -6,16 +6,16 @@ import { Trash2 } from "lucide-react"; // bin icon
 interface RemoveButtonProps {
   userId: string;
   id: string;
+  mutate: () => void;
 }
 
-const RemoveButton: React.FC<RemoveButtonProps> = ({ userId, id }) => {
+const RemoveButton: React.FC<RemoveButtonProps> = ({ userId, id, mutate }) => {
   const handleRemove = async () => {
     try {
       await localAxios.delete(`/api/user/${userId}/transactions/${id}`);
-      alert("Transaction removed successfully!");
+      mutate();
     } catch (error) {
       console.error("Failed to remove transaction:", error);
-      alert("Failed to remove transaction");
     }
   };
 
