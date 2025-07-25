@@ -11,5 +11,5 @@ export const TransactionSchema = z.object({
     date: z.string().min(1, "Date is required"),
     type: z.enum(["BUY", "SELL"]),
   });
-  
-  export type Transaction = z.infer<typeof TransactionSchema>;
+
+export type Transaction = z.infer<typeof TransactionSchema>;
