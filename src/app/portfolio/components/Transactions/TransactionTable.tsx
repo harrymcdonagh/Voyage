@@ -24,7 +24,7 @@ import {
 import { FiChevronRight } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import AddButton from "./AddButton";
+import AddTransaction from "./AddTransaction";
 
 interface TransactionTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -70,7 +70,7 @@ export function TransactionTable<TData, TValue>({
           className="max-w-sm"
         />
         <div>
-          <AddButton userId={userId} />
+          <AddTransaction userId={userId} />
         </div>
       </div>
       <div className="rounded-md border">
