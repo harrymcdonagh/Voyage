@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Nav from "./Nav";
 import AuthProvider from "./auth/Provider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +25,14 @@ export default function RootLayout({
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="system">
             <Nav />
-            {children}
+            {/*
+              Wrap the routed content in a Suspense boundary so that our
+              loading.tsx component is shown immediately on navigation while
+              the next route code loads and compiles.
+            */}
+            <Suspense fallback={<Loading />}>
+              {children}
+            </Suspense>
           </ThemeProvider>
         </AuthProvider>
       </body>
