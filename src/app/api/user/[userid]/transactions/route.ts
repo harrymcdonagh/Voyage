@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/src/lib/prisma';
+import { auth } from '@/src/auth';
 
 export async function GET(request: NextRequest, { params }: { params: { userid: string } }) {
   const { userid } = params;
+
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+  }
+  if (session.user.id !== userid) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
 
   try {
     const transactions = await prisma.transaction.findMany({
@@ -19,6 +28,14 @@ export async function GET(request: NextRequest, { params }: { params: { userid: 
 export async function POST(request: NextRequest, { params }: { params: { userid: string } }) {
   const { userid } = params;
   const body = await request.json();
+
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+  }
+  if (session.user.id !== userid) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
 
   try {
     const newTransaction = await prisma.transaction.create({

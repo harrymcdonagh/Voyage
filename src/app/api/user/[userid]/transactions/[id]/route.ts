@@ -1,9 +1,18 @@
 import prisma from "@/src/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/src/auth";
 
 export async function DELETE(request: NextRequest, { params }: { params: { userid: string, id: string } }) {
     const { userid, id } = params;
     const transactionId = id;
+
+    const session = await auth();
+    if (!session) {
+        return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+    }
+    if (session.user.id !== userid) {
+        return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+    }
 
     try {
         const transaction = await prisma.transaction.findFirst({
@@ -30,10 +39,18 @@ export async function DELETE(request: NextRequest, { params }: { params: { useri
     }
 }
   
-  export async function PUT(request: NextRequest, { params }: { params: { userid: string, id: string} }) {
+export async function PUT(request: NextRequest, { params }: { params: { userid: string, id: string} }) {
     const { userid, id } = params;
     const body = await request.json();
     const transactionId = id;
+
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+    }
+    if (session.user.id !== userid) {
+      return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+    }
   
     try {
       const existingTransaction = await prisma.transaction.findFirst({

@@ -1,5 +1,6 @@
 import prisma from "@/src/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/src/auth";
 
 export async function DELETE(
   request: NextRequest,
@@ -7,6 +8,14 @@ export async function DELETE(
 ) {
   const { userid, id } = params;
   const coinId = parseInt(id);
+
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+  }
+  if (session.user.id !== userid) {
+    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+  }
 
   try {
     const watchlisted = await prisma.watchlist.findFirst({
