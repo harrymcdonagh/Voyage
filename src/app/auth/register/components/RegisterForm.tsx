@@ -68,14 +68,21 @@ export default function RegisterForm() {
           </h2>
           <p className="mt-2 text-center text-sm text-muted-foreground">
             Or{" "}
-            <Link href="#" className="font-medium text-primary hover:underline" prefetch={false}>
-              sign in to your existing account
+            <Link
+              href="#"
+              className="font-medium text-primary hover:underline"
+              prefetch={false}
+            >
+              sign in
             </Link>
           </p>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
+            <Label
+              htmlFor="name"
+              className="block text-sm font-medium text-muted-foreground"
+            >
               Name
             </Label>
             <div className="mt-1">
@@ -84,11 +91,16 @@ export default function RegisterForm() {
                 placeholder="Enter your name"
                 className="block w-full appearance-none rounded-md border border-muted px-3 py-2 placeholder-muted-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
               />
-              {errors.name && <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>}
+              {errors.name && (
+                <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
+              )}
             </div>
           </div>
           <div>
-            <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
+            <Label
+              htmlFor="email"
+              className="block text-sm font-medium text-muted-foreground"
+            >
               Email address
             </Label>
             <div className="mt-1">
@@ -97,11 +109,16 @@ export default function RegisterForm() {
                 {...register("email")}
                 className="block w-full appearance-none rounded-md border border-muted px-3 py-2 placeholder-muted-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
               />
-              {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>
+              )}
             </div>
           </div>
           <div>
-            <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
+            <Label
+              htmlFor="password"
+              className="block text-sm font-medium text-muted-foreground"
+            >
               Password
             </Label>
             <div className="mt-1">

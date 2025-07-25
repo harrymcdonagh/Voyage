@@ -9,6 +9,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 const schema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
@@ -17,7 +19,7 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>;
 
-export default function RegisterForm() {
+export default function SignInForm() {
   const {
     register,
     handleSubmit,
@@ -43,16 +45,25 @@ export default function RegisterForm() {
     <div className="flex items-center justify-center bg-background h-[calc(100vh-4rem)]">
       <div className="w-full max-w-md border rounded-lg border-slate-700 p-10">
         <div>
-          <Link href="#" className="flex justify-center" prefetch={false}>
-            <IoRocketOutline className="h-12 w-12" />
-          </Link>
+          <div className="flex justify-center items-center space-x-2">
+            <Link href="#" prefetch={false}>
+              <IoRocketOutline className="h-12 w-12" />
+            </Link>
+            <span className="text-3xl font-bold tracking-tight text-foreground">
+              Voyage
+            </span>
+          </div>
+          <hr className="my-4 border-t border-gray-300" />
           <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-foreground">
             Sign In
           </h2>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
+            <Label
+              htmlFor="email"
+              className="block text-sm font-medium text-muted-foreground"
+            >
               Email address
             </Label>
             <div className="mt-1">
@@ -61,11 +72,16 @@ export default function RegisterForm() {
                 {...register("email")}
                 className="block w-full appearance-none rounded-md border border-muted px-3 py-2 placeholder-muted-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
               />
-              {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>
+              )}
             </div>
           </div>
           <div>
-            <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
+            <Label
+              htmlFor="password"
+              className="block text-sm font-medium text-muted-foreground"
+            >
               Password
             </Label>
             <div className="mt-1">
@@ -92,6 +108,22 @@ export default function RegisterForm() {
             </Button>
           </div>
         </form>
+        <div className="mt-6 flex space-x-4">
+          <Button
+            onClick={() => signIn("google")}
+            className="flex w-1/2 items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-gray-800 px-4 py-3 text-sm font-medium text-white shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            <FcGoogle className="h-6 w-6" />
+            <span>Sign in with Google</span>
+          </Button>
+          <Button
+            onClick={() => signIn("github")}
+            className="flex w-1/2 items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-gray-800 px-4 py-3 text-sm font-medium text-white shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          >
+            <FaGithub className="h-6 w-6" />
+            <span>Sign in with GitHub</span>
+          </Button>
+        </div>
       </div>
     </div>
   );
